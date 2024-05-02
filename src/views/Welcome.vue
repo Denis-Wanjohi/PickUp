@@ -26,27 +26,27 @@
 <script setup>
 import { ArrowRightIcon } from '@heroicons/vue/24/outline'
 import {ref} from 'vue'
-const currentImage = ref('/public/images/groceries.jpg')
+const currentImage = ref('/images/groceries.jpg')
 const currentDesc = ref("In a time fixed day??? w'll do the shopping")
 const  images = [
     {
-        image:'/public/images/shopping.jpg',
+        image:'/images/shopping.jpg',
         desc:"In a time fixed day??? w'll do the shopping"
     },
     {
-        image:'/public/images/customer.jpg',
+        image:'/images/customer.jpg',
         desc:"Late??? Just a press away"
     },
     {
-        image:'/public/images/red.jpg',
+        image:'/images/red.jpg',
         desc:"Get the package to the destination in few minutes"
     },
     {
-        image:'/public/images/delivery.jpg',
+        image:'/images/delivery.jpg',
         desc:"Get the package to the destination in few minutes"
     },
     {
-        image:'/public/images/delivered.jpg',
+        image:'/images/delivered.jpg',
         desc:"Get the package to the destination in few minutes"
     },
 ]
