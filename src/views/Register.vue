@@ -7,7 +7,7 @@
                      <router-link :to="{name:'Login'}" class="text-blue-600 hover:font-bold">Login</router-link>
                 </p>
             </div>
-            <form class="pt-5" @submit="register">
+            <form class="pt-5" @submit.prevent="register">
                 <div class="flex justify-center">
                     <input type="text" placeholder="Full Names" required v-model="user.fullname" name="name" class="w-3/4 rounded-t-xl  border" >
                 </div>
@@ -21,7 +21,7 @@
                     <input type="password" placeholder="Password" required v-model="user.password" class="w-3/4 border" >
                 </div>
                 <div class="flex justify-center">
-                    <input type="password" placeholder="Confirm password" required v-model="user.confirmedPassword" class="w-3/4 rounded-b-xl  border" >
+                    <input type="password" placeholder="Confirm password" required v-model="user.password_confirmation" class="w-3/4 rounded-b-xl  border" >
                 </div>
                 <div class="w-full flex justify-center">
                     <button type="submit" class="w-3/4 py-2 rounded-md  bg-blue-600 hover:bg-blue-700  h my-4">Register</button>
@@ -41,14 +41,15 @@ const user = {
     email:'',
     phoneNumber:'',
     password:'',
-    confirmedPassword:''
+    password_confirmation:''
 }
 
 function register(){
+    console.log(user)
     store.dispatch('register',user)
-        .then(()=>{
+        .then((data)=>{
             router.push({
-                name:'Dashboard'
+                name:'Home'
             })
         })
 }

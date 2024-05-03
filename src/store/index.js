@@ -7,7 +7,7 @@ const store = createStore({
         },
         user:{
             data:{},
-            token: null,
+            token: sessionStorage.getItem('Main'),
         },
         dashboard:{
             loading:false,
@@ -18,15 +18,24 @@ const store = createStore({
     },
     getters:{},
     actions:{
-        async register({},user){
+        async register({commit},user){
             const {data} = await axiosClient.post('/register',user)
-            commit('registeredUser')
+            commit('registerUser')
+            return data
+        },
+        async login({commit},user){
+            const {data} = await axiosClient.post('/login',user)
+            commit('loginUser')
             return data
         }
      },
-
     mutations:{
-    
+        registerUser:(state,user)=>{
+            state.user.token = sessionStorage.setItem('Main','123')
+        },
+        loginUser:(state)=>{
+            state.user.token = sessionStorage.setItem('Main','123')
+        }
     },
     modules:{}
 })

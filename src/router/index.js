@@ -45,14 +45,19 @@ const router  = createRouter({
     routes
 })
 router.beforeEach((to,from,next)=>{
-    console.log(from.name)
-    console.log(to.name)
+    // console.log("from "+from.name)
+    // console.log("to "+to.name)
+    // console.log("token "+store.state.user.token!=null)
     // store.state.paths.destinations.push(from.name)
     if(to.meta.requireAuth  && store.state.user.token === null){
         // console.log("destination was "+ store.state.destinations.names[0])
         next({name:'Login'})
-    }else{
+    }else if((to.name == 'Login' || to.name == 'Register') && store.state.user.token != null){
+        next({name:'Home'})
+    }
+    else{
         next()
     }
+
 })
 export default router
