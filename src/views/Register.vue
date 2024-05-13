@@ -23,6 +23,13 @@
                 <div class="flex justify-center">
                     <input type="password" placeholder="Confirm password" required v-model="user.password_confirmation" class="w-3/4 rounded-b-xl  border" >
                 </div>
+                <div v-if="error" class="text-center text-xs text-red-500 flex place-items-center justify-around w-3/4 mx-auto bg-red-200 rounded-sm mt-3">
+                    <div>
+                        <p  v-if="error.email"> {{ error.email[0]}}</p>
+                        <p v-if="error.password"> {{ error.password[0]}}</p>  
+                    </div>
+                   <XMarkIcon @click="closeError" class="w-4 hover:bg-red-600  bg-red-300 hover:text-white rounded-full"/>
+                </div>
                 <div class="w-full flex justify-center">
                     <button type="submit" class="w-3/4 py-2 rounded-md  bg-blue-600 hover:bg-blue-700  h my-4">Register</button>
                 </div>
@@ -34,8 +41,10 @@
 <script setup>
 import store from '../store'
 import { useRouter } from 'vue-router';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { ref } from 'vue';
 const router  = useRouter()
-
+const error = ref()
 const user = {
     fullname: '',
     email:'',
@@ -45,13 +54,28 @@ const user = {
 }
 
 function register(){
-    console.log(user)
     store.dispatch('register',user)
         .then((data)=>{
             router.push({
                 name:'Home'
             })
         })
+        .catch((err)=>{
+
+            error.value = err.response.data.errors
+
+            // if(err.response.data.errors.email){
+            //     return
+            // }else if(err.response.data.errors.password){
+            //     error.value =  err.resonse.data.errors.password
+            //     return
+            // }
+            // error.value  = err.response.data.errors.password
+        })
+}
+function closeError(ev){
+    ev.preventDefault();
+    error.value = null
 }
 </script>
 

@@ -29,7 +29,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import {ref} from 'vue'
-import { XCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 import store from '../store'
 const router  = useRouter()
 
@@ -56,7 +56,6 @@ function userLogin(){
 function closeError(ev){
     ev.preventDefault();
     error.value = null
-
 }
 
 </script>
