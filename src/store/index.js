@@ -8,6 +8,9 @@ const store = createStore({
         user:{
             data:{},
             token: sessionStorage.getItem('Auth'),
+            rides:'',
+            shopping:'',
+            packages:'',
         },
         dashboard:{
             loading:false,
@@ -58,6 +61,10 @@ const store = createStore({
             commit('loginUser',data)
             return data
         },
+        async userData({commit}){
+            const data = await axiosClient.get('/home')
+            commit('userData',data)
+        },
         async addToCart({commit},product){
             const res = await axiosClient.post('/addToCart',product);
             const products = await axiosClient.get('/cartItems')
@@ -65,8 +72,49 @@ const store = createStore({
             return res
         },
         async cartItems({commit}){
-            const products = await axiosClient.get('/cartItems')
-            commit('cartItems',products)
+            // const products = await axiosClient.get('/cartItems')
+            // commit('cartItems',products)
+            // let body =  JSON.stringify({
+            //     "BusinessShortCode": 174379,
+            //     "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTEzMjA1MTMw",
+            //     "Timestamp": "20240513205130",
+            //     "TransactionType": "CustomerPayBillOnline",
+            //     "Amount": 1,
+            //     "PartyA": 254708475592,
+            //     "PartyB": 174379,
+            //     "PhoneNumber": 254708475592,
+            //     "CallBackURL": "https://mydomain.com/path",
+            //     "AccountReference": "BodaBodaRide",
+            //     "TransactionDesc": "Payment of X" 
+            //   })
+            // const x = await axiosClient.post('/sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',body)
+            // console.log(x);
+            // let headers = new Headers();
+            // headers.append("Content-Type", "application/json");
+            // headers.append("Authorization", `Bearer ${store.state.user.token}`);
+            
+            // fetch("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", {
+            //   method: 'POST',
+            //   headers,
+            //   body: JSON.stringify({
+            //     "BusinessShortCode": 174379,
+            //     "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTEzMjA1MTMw",
+            //     "Timestamp": "20240513205130",
+            //     "TransactionType": "CustomerPayBillOnline",
+            //     "Amount": 1,
+            //     "PartyA": 254708475592,
+            //     "PartyB": 174379,
+            //     "PhoneNumber": 254708475592,
+            //     "CallBackURL": "https://mydomain.com/path",
+            //     "AccountReference": "BodaBodaRide",
+            //     "TransactionDesc": "Payment of X" 
+            //   })
+            // })
+            //   .then(response => response.text())
+            //   .then(result => console.log(result))
+            //   .catch(error => console.log(error));
+
+            
             return products.data
         },
         async editProduct({commit},item){
@@ -180,6 +228,12 @@ const store = createStore({
         loginUser:(state,data)=>{
             sessionStorage.setItem('Auth',data.token)
             state.user.token = sessionStorage.getItem('Auth')
+        },
+        userData:(state,data)=>{
+            console.log(data)
+            state.user.rides = data.data.rides
+            state.user.shopping = data.data.shopping
+            state.user.packages = data.data.packages
         },
         cartItems:(state,products)=>{
             state.products.products = products.data.items

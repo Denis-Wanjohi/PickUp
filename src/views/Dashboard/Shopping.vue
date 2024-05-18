@@ -5,26 +5,27 @@
         <p class="text-sm font-light">lets  get it done...</p>
     </div>
     <div>
+        
         <form  @submit.prevent="addToCart"  class="border px-3 py-2  bg-cyan-400 w-3/4 mx-auto rounded shadow place-items-center text-center">
-            <div class=" flex justify-between align-middle place-items-center w-full  ">
+            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
                 <label for="productName" class="font-bold">Product name:</label>
-                <input type="text" required name="productName"  v-model="product.product" class="border rounded-sm w-3/4  focus:ring-2 my-1 focus:ring-indigo-600"  placeholder="Maize flour">
+                <input type="text" required name="productName"  v-model="product.product" class="border rounded-sm sm:w-3/4 w-full focus:ring-2 my-1 focus:ring-indigo-600"  placeholder="Maize flour">
             </div>
-            <div class=" flex justify-between align-middle place-items-center w-full  ">
+            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
                 <label for="quantity" class="font-bold">Quantity:</label>
-                <input type="text" required name="quantity" v-model="product.quantity" class="border rounded-sm w-3/4  focus:ring-2 my-1 focus:ring-indigo-600" placeholder="2 kg or 2 kilograms">
+                <input type="text" required name="quantity" v-model="product.quantity" class="border rounded-sm sm:w-3/4 w-full  focus:ring-2 my-1 focus:ring-indigo-600" placeholder="2 kg or 2 kilograms">
             </div>
-            <div class=" flex justify-between align-middle place-items-center w-full  ">
+            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
                 <label for="price" class="font-bold">Estimated Price: <br> <span class="text-xs">(per kg/litre )</span></label>
-                <input type="text" required name="price" v-model="product.price" class="border rounded-sm w-3/4  focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="120">
+                <input type="text" required name="price" v-model="product.price" class="border rounded-sm sm:w-3/4 w-full  focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="120">
             </div>
-            <div class=" flex justify-between align-middle place-items-center w-full  ">
+            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
                 <label for="price" class="font-bold">Brand/Company:</label>
-                <input type="text" required name="price" v-model="product.company" class="border rounded-sm w-3/4  focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="soko">
+                <input type="text" required name="price" v-model="product.company" class="border rounded-sm sm:w-3/4 w-full focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="soko">
             </div>
-            <div class=" flex justify-between align-middle place-items-center w-full  ">
+            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
                 <label for="placeToBuy" class="font-bold">Place to buy:</label>
-                <input type="text" required name="placeToBuy" v-model="product.shop" class="border rounded-sm w-3/4  focus:ring-2 my-1 focus:ring-indigo-600 " placeholder="magunus">
+                <input type="text" required name="placeToBuy" v-model="product.shop" class="border rounded-sm sm:w-3/4 w-full  focus:ring-2 my-1 focus:ring-indigo-600 " placeholder="magunus">
             </div>
             <div class="">
                 <label for="extraInfo" class="font-bold  text-left">Add Extra infomartion here:</label>
@@ -70,10 +71,11 @@
                         <td>{{ item.total }}</td>
                         <td class="flex  justify-around">
                             <button @click="editProduct(item.id)" class="my-1 bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 border text-sm font-bold">
-                               EDIT
+                                <PencilIcon  class="w-5"></PencilIcon>
                             </button>
                             <button @click="removeFromCart(item.id)" class="my-1 bg-red-500 hover:bg-red-600 rounded-md px-2 py-1 border text-sm font-bold">
-                               DELETE
+                                <TrashIcon  class="w-5"></TrashIcon>
+
                             </button>
                         </td>
                     </tr>
@@ -101,6 +103,7 @@
 <script setup>
 import { ref } from "vue";
 import store from '../../store'
+import { PencilIcon,TrashIcon } from "@heroicons/vue/24/outline";
 
 const product = ref({
     product :'',

@@ -1,5 +1,5 @@
 <template>
-  <div  class="bg-cyan-200 text-center py-2">
+  <div  class="bg-cyan-200 text-center py-2 px-3 sm:p-0 ">
     <h1 class="font-bold text-2xl" style="font-family: Comic Sans MS">About us</h1>
     <div class="bg-cyan-500 w-fit mx-auto py-10 px-5 rounded-tr-[40px] rounded-bl-[40px] font-bold" style="font-family: Ink Free;">
        <p>

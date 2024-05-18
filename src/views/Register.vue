@@ -1,13 +1,13 @@
  border<template>
     <div class="flex justify-center w-screen h-screen place-items-center ">
-        <div class="sm:w-1/2 w-full sm:p-0 px-2 shadow-xl bg-cyan-100 rounded-sm">
+        <div class="sm:w-1/2 w-full sm:p-0 px-2 shadow-xl grid-1 place-content-center bg-cyan-200   rounded-sm space-y-[1px]">
             <div class="text-center">
                 <p class="font-bold text-3xl">Create an  account</p>
                 <p class="text-sm">Already have an account?
                      <router-link :to="{name:'Login'}" class="text-blue-600 hover:font-bold">Login</router-link>
                 </p>
             </div>
-            <form class="pt-5" @submit.prevent="register">
+            <form class="pt-5 space-y-[1px]" @submit.prevent="register">
                 <div class="flex justify-center">
                     <input type="text" placeholder="Full Names" required v-model="user.fullname" name="name" class="w-3/4 rounded-t-xl  border" >
                 </div>

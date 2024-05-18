@@ -1,13 +1,13 @@
 <template>
     <div class="flex justify-center w-screen h-screen place-items-center ">
-        <div class="sm:w-1/2 w-full sm:p-0 px-2  shadow-xl bg-cyan-100 rounded-sm">
+        <div class="sm:w-1/2 w-full sm:p-0 px-2  grid-1 place-content-center shadow-xl bg-cyan-200 rounded-sm">
             <div class="text-center">
                 <p class="font-bold text-3xl">Login to your account</p>
-                <p class="text-sm">Dont have an account?
+                <p class="text-sm">Don't have an account?
                      <router-link :to="{name:'Register'}" class="text-blue-600 hover:font-bold">Register</router-link>
                 </p>
             </div>
-            <form class="pt-5" @submit.prevent="userLogin">
+            <form class="pt-5 space-y-[1px]" @submit.prevent="userLogin">
                 <div class="flex justify-center">
                     <input type="email" placeholder="email@example.com" required v-model="user.email" class="w-3/4 rounded-t-xl border  " >
                 </div>
@@ -46,10 +46,12 @@ function userLogin(){
             // if( store.state.destinations.names[0] !== 'Login'){
                 // router.push({name:store.state.destinations.names[0]} )
             // }else{
+                alert()
                 router.push({name:'Home'})
             // }
         })
         .catch((err)=>{
+            
             error.value = err.response.data.error
         })
 }

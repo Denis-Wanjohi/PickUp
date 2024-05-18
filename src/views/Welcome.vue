@@ -1,23 +1,34 @@
 <template>
-  <div class="w-screen h-[90vh] bg-cyan-200 flex justify-center  place-items-center">
-        <div class="w-[40%] h-[70vh] bg-cyan-400  grid place-content-center text-center">
-            <div class="border rounded px-2 py-5 my-5 font-bold text-4xl shadow-emerald-300 shadow"  style="font-family:Bradley Hand ITC;">
+  <div class="w-screen h-screen   flex justify-center  place-items-center backdrop "   >
+        <div class="w-screen sm:w-[50%] h-[100vh] bg-slate-400 opacity-85   grid place-content-center text-center">
+            <div class="border rounded px-2 py-5 my-5 font-bold text-4xl  shadow-emerald-300 shadow text-black text-left font-sans space-x-1 space-y-3 " >
+                <!-- style="font-family:Bradley Hand ITC;" -->
                 <p class="">WE DELIVER,</p>
-                <p class="">SAVE ON YOUR TIME</p>
+                <p class="">SAVE ON YOUR TIME ON THE GO</p>
                 <p class="">&</p>
                 <p class="">CREATE TRUSTWORTHYNESS </p> 
-            </div>
-            <div>
-                <button class="bg-pink-500 flex  font-bold justify-center align-middle place-items-center mx-auto hover:bg-pink-600 px-3 py-2  rounded-lg shadow-xl shadow-black">
+                <p class="text-sm font-normal">
+                    Get your shopping done and delivered at your doorstep fast and easy <br>
+                    Transport Services and Package delivery Services
+                </p>
+                <button class="bg-pink-500 flex  text-xl font-bold justify-center align-middle place-items-center hover:bg-pink-600 px-3 py-2 my-3 rounded-lg shadow-xl shadow-black  transition delay-150 ease-in-out hover:translate-x-3">
                     <router-link :to="{name:'Home'}" class="flex place-items-center">
                         GET  STARTED
                         <ArrowRightIcon class="w-7"/>
                     </router-link>
                 </button>
             </div>
+            <!-- <div>
+                <button class="bg-pink-500 flex  font-bold justify-center align-middle place-items-center mx-auto hover:bg-pink-600 px-3 py-2  rounded-lg shadow-xl shadow-black">
+                    <router-link :to="{name:'Home'}" class="flex place-items-center">
+                        GET  STARTED
+                        <ArrowRightIcon class="w-7"/>
+                    </router-link>
+                </button>
+            </div> -->
         </div>
-        <div class="w-[40%] h-[70vh] bg-cyan-400 grid place-content-center text-center gap-3">
-            <img :src="currentImage" class="rounded-tl-[50px] rounded-br-[50px] px-5 max-h-[300px] min-h-[300px] mx-auto" alt="">
+        <div class="hidden sm:block w-[50%] h-[100vh] bg-slate-500 opacity-90 grid place-content-center text-center gap-3">
+            <img :src="currentImage" class=" rounded-tl-[50px] rounded-br-[50px] px-5 max-h-[300px] min-h-[300px] mx-auto" alt="">
             <p class="font-mono animate-fade-in-down">{{currentDesc}}</p>
         </div>
   </div>
@@ -50,7 +61,7 @@ const  images = [
         desc:"Get the package to the destination in few minutes"
     },
 ]
-let x = 0
+let x = ''
 setInterval(()=>{
     currentImage.value  = images[x].image
     currentDesc.value  = images[x].desc
@@ -59,9 +70,13 @@ setInterval(()=>{
         x = 0 
     }
 },5000)
-
+let y = '../../public/images/download.jpg'
 </script>
 
 <style>
-
+    .backdrop{
+        background-image: url('../../public/images/car.jpg');
+        object-fit:cover;
+        background-size: cover;
+    }
 </style>

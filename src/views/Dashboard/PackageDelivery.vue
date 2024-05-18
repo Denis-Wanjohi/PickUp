@@ -5,7 +5,7 @@
     <p  class="text-center text-sm">...where should i place it?</p>
   </div>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm sm:px-0 px-5">
     <form class="space-y-6" @submit.prevent="packageRider">
       <div>
         <label for="loaction" class="block text-sm font-medium leading-6 text-gray-900">Current Location</label>
@@ -77,9 +77,6 @@
     ></delivery-confirmation>
     <Payments v-if="pack.confirmed"></Payments>
     </div>
-    {{ pack}}
-    <hr>
-    {{ rider }}
     <!-- <RideConfirmation v-if="submitted" @confirm="confirm" @decline="decline" @close="close" :transport="transportData" :rider="ridersData"></RideConfirmation> -->
   </div>
 </template>

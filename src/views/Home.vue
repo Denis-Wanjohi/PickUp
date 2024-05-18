@@ -1,30 +1,34 @@
 <template>
 <div>
     <div class="w-screen h-[70vh] border-b bg-slate-500">
-        <img src="./../../public/images/car.jpg" class=" w-screen h-[100%] object-contain" alt="">
+        <div>
+            
+        </div>
+        <!-- <img src="./../../public/images/car.jpg" class=" w-screen h-[100%] object-contain" alt="">
         <button class="relative -top-20 bg-pink-500 flex  font-bold justify-center align-middle place-items-center mx-auto hover:bg-pink-600 px-3 py-2  rounded-lg shadow-xl shadow-black">
                     <router-link :to="{name:'Home'}" class="flex place-items-center">
                         GET  STARTED
                         <ArrowRightIcon class="w-7"/>
                     </router-link>
-        </button>
+        </button> -->
     </div>
-    <div class="flex justify-around bg-slate-100 py-3">
-        <div class="py-2 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border px-4">SHOPPING</div>
-        <div class="py-2 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border px-4">TRANSPORT</div>
-        <div class="py-2 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border px-4">PACKAGE DELIVERY</div>
-    </div>
+    <!-- <div class="flex justify-around bg-slate-100 py-3">
+        <div class="sm:py-2 py-1 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border sm:px-4 px-1">SHOPPING</div>
+        <div class="sm:py-2 py-1 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border sm:px-4 px-1">TRANSPORT</div>
+        <div class="sm:py-2 py-1 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border sm:px-4 px-1">PACKAGE DELIVERY</div>
+    </div> -->
+    
     <div class="flex justify-around bg-slate-100 py-3">
         <div class="w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">0</p>
-            <p>shoppings</p>
+            <p class="text-[60px] font-bold">{{str.shopping}}</p>
+            <p>Shopping trips</p>
         </div>
-        <div class="w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">0</p>
+        <div class="sm:w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
+            <p class="text-[60px] font-bold">{{str.rides}}</p>
             <p>Transport Trips</p>
         </div>
         <div class="w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">0</p>
+            <p class="text-[60px] font-bold">{{ str.packages }}</p>
             <p>Packages Delivered</p>
         </div>
     </div>
@@ -77,7 +81,7 @@
 <script setup>
 import {ref} from 'vue'
 import store from '../store'
-
+store.dispatch('userData')
 let str = ref(store.state.user)
 
 </script>

@@ -6,7 +6,7 @@
     <p class="text-center text-sm">..lets get you there</p>
   </div>
 
-  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm sm:px-0 px-5">
     <form class="space-y-6" @submit.prevent="rideRequest">
       <div>
         <label

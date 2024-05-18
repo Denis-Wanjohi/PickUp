@@ -5,6 +5,9 @@
 <Services></Services>
 <About></About>
 <Comment></Comment>
+<footer>
+    
+</footer>
 </template>
 
 <script setup>
