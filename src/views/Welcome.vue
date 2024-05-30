@@ -61,7 +61,7 @@ const  images = [
         desc:"Get the package to the destination in few minutes"
     },
 ]
-let x = ''
+let x = 0
 setInterval(()=>{
     currentImage.value  = images[x].image
     currentDesc.value  = images[x].desc

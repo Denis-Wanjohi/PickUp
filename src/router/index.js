@@ -49,14 +49,35 @@ const router  = createRouter({
     routes
 })
 router.beforeEach((to,from,next)=>{
+    store.state.paths.destinations.push(to.name)
     if(to.meta.requireAuth  && store.state.user.token === null){
+        // store.state.paths.destinations.push(to.name)
         next({name:'Login'})
+        // store.state.paths.destinations.push(to.name)
     }else if((to.name == 'Login' || to.name == 'Register'  || to.name == 'DashbBoard') && store.state.user.token != null){
         next({name:'Home'})
     }
-    else{
-        next()
+    else if(to.meta.requireAuth  && store.state.user.token !== null){
+        next(store.state.paths.destinations[1])
+        store.state.paths.destinations = []
     }
-
+    else{
+        if(store.state.paths.destinations.length !== 0){
+            // if(store.state.paths.destinations[2] === 'Login'){
+            //     console.log("one")
+            //    next() 
+            // }
+            // else{
+            //     // next(store.state.paths.destinations[1])
+            // }
+            console.log(store.state.paths.destinations[2])
+            next()
+        }else{
+            store.state.paths.destinations = []
+            next()
+        }
+    }
+    console.log(store.state.paths.destinations)
+    
 })
 export default router

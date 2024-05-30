@@ -19,7 +19,8 @@
                    <XMarkIcon @click="closeError" class="w-4 hover:bg-red-600  bg-red-300 hover:text-white rounded-full"/>
                 </div>
                 <div class="w-full flex justify-center">
-                    <button type="submit" class="w-3/4 py-2 rounded-md  bg-blue-600 hover:bg-blue-700  h my-4">Login</button>
+                    <button v-if="!login" type="submit" class="w-3/4 py-2 rounded-md  bg-blue-600 hover:bg-blue-700  h my-4">Login</button>
+                    <VProgressCircular v-else bg-color="blue" indeterminate="" color="white" size="30"></VProgressCircular>
                 </div>
             </form>
         </div>
@@ -30,6 +31,7 @@
 import { useRouter } from 'vue-router';
 import {ref} from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import {  VProgressCircular } from 'vuetify/lib/components/index.mjs';
 import store from '../store'
 const router  = useRouter()
 
@@ -37,8 +39,12 @@ const user = {
     email:'',
     password:''
 }
+const login = ref(false)
 const error = ref()
+const errorTimer = ref()
+
 function userLogin(){
+    login.value = true
     store.dispatch('login',user)
         .then((data)=>{
 
@@ -46,12 +52,14 @@ function userLogin(){
             // if( store.state.destinations.names[0] !== 'Login'){
                 // router.push({name:store.state.destinations.names[0]} )
             // }else{
-                alert()
                 router.push({name:'Home'})
             // }
         })
         .catch((err)=>{
-            
+            setTimeout(()=>{
+                error.value = ''
+            },3000)
+            login.value = false
             error.value = err.response.data.error
         })
 }

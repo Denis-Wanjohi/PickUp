@@ -8,6 +8,7 @@ const store = createStore({
         user:{
             data:{},
             token: sessionStorage.getItem('Auth'),
+            login:'',
             rides:'',
             shopping:'',
             packages:'',
@@ -59,6 +60,11 @@ const store = createStore({
         async login({commit},user){
             const {data} = await axiosClient.post('/login',user)
             commit('loginUser',data)
+            return data
+        },
+        async logout({commit},user){
+            const {data} = await axiosClient.post('/logout',user)
+            commit('logoutnUser',data)
             return data
         },
         async userData({commit}){
@@ -226,6 +232,10 @@ const store = createStore({
             state.user.token = sessionStorage.getItem('Auth')
         },
         loginUser:(state,data)=>{
+            sessionStorage.setItem('Auth',data.token)
+            state.user.token = sessionStorage.getItem('Auth')
+        },
+        logoutUser:(state,data)=>{
             sessionStorage.setItem('Auth',data.token)
             state.user.token = sessionStorage.getItem('Auth')
         },
