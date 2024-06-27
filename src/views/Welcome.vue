@@ -1,8 +1,9 @@
 <template>
-  <div class="w-screen h-screen   flex justify-center  place-items-center backdrop "   >
-        <div class="w-screen sm:w-[50%] h-[100vh] bg-slate-400 opacity-85   grid place-content-center text-center">
-            <div class="border rounded px-2 py-5 my-5 font-bold text-4xl  shadow-emerald-300 shadow text-black text-left font-sans space-x-1 space-y-3 " >
+  <div class="w-screen h-screen   flex justify-center  place-items-center bg-[url('images/car.jpg')] "   >
+        <div class="w-screen sm:w-[50%] h-[100vh] bg-slate-200 opacity-85   grid place-content-center text-center">
+            <div class="border rounded px-2 py-5 my-5 font-bold text-3xl  shadow-emerald-300 shadow text-black text-left font-sans space-x-1 space-y-3 " >
                 <!-- style="font-family:Bradley Hand ITC;" -->
+
                 <p class="">WE DELIVER,</p>
                 <p class="">SAVE ON YOUR TIME ON THE GO</p>
                 <p class="">&</p>
@@ -61,11 +62,14 @@ const  images = [
         desc:"Get the package to the destination in few minutes"
     },
 ]
+const color = ["red","green","black","white","red","green","black","white"]
 let x = 0
+const val = ref()
 setInterval(()=>{
     currentImage.value  = images[x].image
     currentDesc.value  = images[x].desc
     x++
+    val.value = color[x]
     if(x >= images.length){
         x = 0 
     }

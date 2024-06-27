@@ -1,21 +1,23 @@
 <template>
 <div>
-    <div class="w-screen h-[70vh] border-b bg-slate-500" >
-        <div class="flex justify-start px-15 place-items-center h-full">
+    <div class="w-screen h-[70vh] bg-cyan-600" >
+        <div class="flex justify-start px-15 place-items-center h-full" v-if="display">
             <div>
-                <p  class="font-bold text-5xl">{{display.titleb}}</p>
+                <p  class="font-bold text-4xl">{{display.title}}</p>
                 <div class="px-5">
                     <p class="border-l-4 px-3 ">{{ display.note }}</p>
                 </div>
                 <p class="font-bold">{{ display.description }} </p>
                 <button class="bg-pink-500   font-bold justify-center align-middle place-items-center mx-auto hover:bg-pink-600 px-3 py-2  rounded-lg shadow-xl shadow-black">
-                    <router-link :to="{name: display.link }" class="flex place-items-center">
+                    <!-- <router-link :to="{name: display.link }" class="flex place-items-center">
                         GET  STARTED
-                    </router-link>
+                    </router-link> -->
+                    <a :href=display.link>GET STARTED</a>
                 </button>
             </div>
-            <div class="flex justify-center place-items-center mx-auto">
-                <img :src=display.image class="w-[300px] rounded-full" alt="">
+            <div class="flex justify-center place-items-center mx-auto hidden sm:block">
+                <!-- <img src="/images/download.jpg" class="w-[300px] max-h-[300px] shadow-xl shadow-blue-800 rounded-full" alt=""> -->
+                <img :src=display.image class="w-[300px] max-h-[300px] shadow-xl shadow-blue-800 rounded-full" alt="">
             </div>
             
         </div>
@@ -37,22 +39,26 @@
         <div class="sm:py-2 py-1 rounded-xl shadow bg-slate-300 hover:bg-cyan-400 font-bold border-dashed border sm:px-4 px-1">PACKAGE DELIVERY</div>
     </div> -->
     
-    <div class="flex justify-around bg-slate-100 py-3">
-        <div class="w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">{{str.shopping}}</p>
-            <p>Shopping trips</p>
-        </div>
-        <div class="sm:w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">{{str.rides}}</p>
-            <p>Transport Trips</p>
-        </div>
-        <div class="w-[150px] h-fit bg-gray-700 text-center pb-5 rounded-md">
-            <p class="text-[60px] font-bold">{{ str.packages }}</p>
-            <p>Packages Delivered</p>
+    <div class="w-3/4 mx-auto  bg-gray-100 py-3 sm:block hidden">
+        <div  class="flex justify-around">     
+            <div class="w-[150px] h-fit bg-cyan-400 text-center pb-5 rounded-md ">
+                <p class="text-[60px] font-bold">{{str.shopping}}</p>
+                <p>Shopping trips</p>
+            </div>
+            <div class="sm:w-[150px] h-fit bg-cyan-400 text-center pb-5 rounded-md">
+                <p class="text-[60px] font-bold">{{str.rides}}</p>
+                <p>Transport Trips</p>
+            </div>
+            <div class="w-[150px] h-fit bg-cyan-400 text-center pb-5 rounded-md">
+                <p class="text-[60px] font-bold">{{ str.packages }}</p>
+                <p>Packages Delivered</p>
+            </div>
         </div>
     </div>
-    <div class="w-3/4 h-[200px] bg-green-300  shadow-lg mx-auto rounded-tl-[50px] flex my-5">
-        <div class="w-3/4 text-center">
+
+    
+    <div class="sm:w-3/4 sm:h-[200px] bg-cyan-200  text-sm py-5  md:mx-auto  shadow-xl sm:mx-5 rounded-tl-[50px] flex my-5">
+        <div class="sm:w-3/4 text-center ">
             <p class="font-bold  text-xl">Shopping</p>
             <ul style="font-family: Comic Sans MS;">
                 <li>~ Write a list at the comfort of your home or workplace</li>
@@ -63,11 +69,11 @@
                 <li class="font-bold">~ AS EASY AS THAT</li>
             </ul>
         </div>
-        <img src="/images/download.jpg" class="mx-auto" alt="">
+        <img src="/images/download.jpg" class="mx-auto hidden sm:block " alt="">
     </div>
-    <div class="w-3/4 h-[200px] bg-green-300  shadow-lg mx-auto rounded-tr-[50px] flex my-5">
-        <img src="/images/customer.jpg" class="mx-auto" alt="">
-        <div class="w-3/4 text-center">
+    <div class="sm:w-3/4 sm:h-fit bg-cyan-200  py-5    shadow-lg sm:mx-5 md:mx-auto rounded-tr-[50px] flex my-5">
+        <img src="/images/customer.jpg" class="mx-auto w-[200px] sm:block hidden " alt="">
+        <div class="sm:w-3/4 text-center">
             <p class="font-bold  text-xl">Transport</p>
             <ul style="font-family: Comic Sans MS;">
                 <li>~ Specify your location</li>
@@ -81,8 +87,8 @@
         </div>
         
     </div>
-    <div class="w-3/4 h-[200px] bg-green-300  shadow-lg mx-auto rounded-tl-[50px] flex my-5">
-        <div class="w-3/4 text-center">
+    <div class="sm:w-3/4 sm:h-fit bg-cyan-200   py-5   shadow-lg sm:mx-5 md:mx-auto rounded-tl-[50px] flex my-5">
+        <div class="sm:w-3/4 text-center">
             <p class="font-bold  text-xl">Package Delivery</p>
             <ul style="font-family: Comic Sans MS;">
                 <li>~ Specify your location</li>
@@ -94,13 +100,13 @@
                 <li class="font-bold">~ WE MAKE WORK EASY</li>
             </ul>
         </div>
-        <img src="/images/red.jpg" class="mx-auto" alt="">
+        <img src="/images/red.jpg" class="mx-auto hidden w-[200px] sm:block" alt="">
     </div>
 </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import store from '../store'
 store.dispatch('userData')
 let str = ref(store.state.user)
@@ -115,13 +121,13 @@ setInterval(() => {
     }
 }, 5000);
 
-let data = [
-    {
+const data = [
+{
         title:'SHOPPING',
         note:'Quick and Easy',
         description:'Make the list with clear specification, we will get it at your doorstep',
         link:'Shopping',
-        image:'/images/list.jpg',
+        image:'/images/download.jpg',
         color:'blue'
     },
     {
@@ -143,6 +149,7 @@ let data = [
 
     }
 ]
+
 </script>
 
 <style>

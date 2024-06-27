@@ -15,7 +15,7 @@
                     <input type="email" placeholder="email@example.com" required v-model="user.email" class="w-3/4   border" >
                 </div>
                 <div class="flex justify-center">
-                    <input type="tel" placeholder="+2547XXXXXXXX" required v-model="user.phoneNumber" class="w-3/4  border " >
+                    <input type="tel"  v-maska  data-maska="+254#########" placeholder="+2547XXXXXXXX" required v-model="user.phoneNumber" class="w-3/4  border " >
                 </div>
                 <div class="flex justify-center">
                     <input type="password" placeholder="Password" required v-model="user.password" class="w-3/4 border" >
@@ -43,6 +43,7 @@ import store from '../store'
 import { useRouter } from 'vue-router';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
+import { vMaska } from "maska/vue"
 const router  = useRouter()
 const error = ref()
 const user = {

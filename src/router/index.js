@@ -60,24 +60,24 @@ router.beforeEach((to,from,next)=>{
     else if(to.meta.requireAuth  && store.state.user.token !== null){
         next(store.state.paths.destinations[1])
         store.state.paths.destinations = []
-    }
-    else{
-        if(store.state.paths.destinations.length !== 0){
-            // if(store.state.paths.destinations[2] === 'Login'){
-            //     console.log("one")
-            //    next() 
-            // }
-            // else{
-            //     // next(store.state.paths.destinations[1])
-            // }
-            console.log(store.state.paths.destinations[2])
-            next()
-        }else{
+    }else{
             store.state.paths.destinations = []
             next()
-        }
     }
-    console.log(store.state.paths.destinations)
+    // else{
+    //     if(store.state.paths.destinations.length !== 0){
+    //         // if(store.state.paths.destinations[2] === 'Login'){
+    //         //     console.log("one")
+    //         //    next() 
+    //         // }
+    //         // else{
+    //         //     // next(store.state.paths.destinations[1])
+    //         // }
+    //         console.log(store.state.paths.destinations[2])
+    //         next()
+    //     }
+    // }
+    // console.log(store.state.paths.destinations)
     
 })
 export default router

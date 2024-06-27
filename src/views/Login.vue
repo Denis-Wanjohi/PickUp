@@ -18,7 +18,7 @@
                    <p> {{ error }}</p>
                    <XMarkIcon @click="closeError" class="w-4 hover:bg-red-600  bg-red-300 hover:text-white rounded-full"/>
                 </div>
-                <div class="w-full flex justify-center">
+                <div class="w-full flex justify-center py-2">
                     <button v-if="!login" type="submit" class="w-3/4 py-2 rounded-md  bg-blue-600 hover:bg-blue-700  h my-4">Login</button>
                     <VProgressCircular v-else bg-color="blue" indeterminate="" color="white" size="30"></VProgressCircular>
                 </div>

@@ -112,7 +112,14 @@ function setNumber(){
     store.dispatch('setPackageNumber',user.value)
 }
 function confirmationCode(){
+    console.log("one");
+    alert();
     store.dispatch('confirmationPackageCode',user.value)
+          .then((data)=>{
+                   console.log(data)
+                 router.push({name:"Home"})
+          })
+
 }
 
 </script>

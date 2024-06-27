@@ -23,6 +23,8 @@ const store = createStore({
             confirmed:'',
             number:'',
             mpesaCode:'',
+            destination:'',
+            numberToCall:'',
         },
         transport:{
             currentLocation:'',
@@ -63,22 +65,26 @@ const store = createStore({
             return data
         },
         async logout({commit},user){
+            console.log%("logging out")
             const {data} = await axiosClient.post('/logout',user)
-            commit('logoutnUser',data)
+            commit('logoutUser',data)
             return data
         },
         async userData({commit}){
             const data = await axiosClient.get('/home')
             commit('userData',data)
         },
+        /**
+         * S H O P P I N G
+         */
         async addToCart({commit},product){
             const res = await axiosClient.post('/addToCart',product);
-            const products = await axiosClient.get('/cartItems')
-            commit('cartItems',products)
+            console.log(res)
+            commit('cartItems',res)
             return res
         },
         async cartItems({commit}){
-            // const products = await axiosClient.get('/cartItems')
+            const products = await axiosClient.get('/cartItems')
             // commit('cartItems',products)
             // let body =  JSON.stringify({
             //     "BusinessShortCode": 174379,
@@ -120,23 +126,27 @@ const store = createStore({
             //   .then(result => console.log(result))
             //   .catch(error => console.log(error));
 
-            
+            commit('cartItems',products)
+            console.log(products)
             return products.data
+
         },
         async editProduct({commit},item){
             const data = await axiosClient.post('/editProduct',item)
             return data.data.product
         },
         async editCart({commit},item){
-            const data = await axiosClient.post('/editCart',item)
-            const products = await axiosClient.get('/cartItems')
-            commit('cartItems',products)
+            const res = await axiosClient.post('/editCart',item)
+            commit('cartItems',res)
         },
         async removeFromCart({commit},item){
-            const data = await axiosClient.post('/removeFromCart',item)
-            const products = await axiosClient.get('/cartItems')
-            commit('cartItems',products)
+            const res = await axiosClient.post('/removeFromCart',item)
+            commit('cartItems',res)
         },
+        // async cartTotal({commit}){
+        //     const res = await axiosClient.get('/cartTotal')
+        //     commit('cartTotal',res)
+        // },
         async riderRequest({commit}){
             const data = await axiosClient.post('/riderRequest')
             commit('riderResponse',data)
@@ -146,14 +156,25 @@ const store = createStore({
                 'data' : data
             }
             const  res = await axiosClient.post('/continueProcess',process)
+            console.log(res.data.productData)
             commit('continueProcess',res)
             return res.data.choice
+        },
+        async setDestination({commit},data){
+            let destination = {
+                'data' : data
+            }
+            const  res = await axiosClient.post('/setDestination',destination)
+            const products = await axiosClient.get('/cartItems')
+            commit('cartItems',products)
+            commit('setDestination',res)
         },
         async setNumber({commit},data){
             let phoneNumber = {
                 'data' : data
             }
             const  res = await axiosClient.post('/setNumber',phoneNumber)
+            console.log(res)
             const products = await axiosClient.get('/cartItems')
             commit('cartItems',products)
             commit('setNumber',res)
@@ -165,6 +186,9 @@ const store = createStore({
             const res = await   axiosClient.post('/confirmationCode',mpesaCode)
             commit('mpesaCode',res)
         },
+        /**
+         * R I D E
+         */
         async rideRequest({commit},data){
             // let ride = {
             //     'data' : data
@@ -197,6 +221,9 @@ const store = createStore({
             }
             commit('ride')
         },
+        /**
+         * P A C K A G E
+         */
         async packageRider({commit},data){
             const res = await axiosClient.post('/packageRider',data)
             commit('packageRider',res)
@@ -233,26 +260,32 @@ const store = createStore({
         },
         loginUser:(state,data)=>{
             sessionStorage.setItem('Auth',data.token)
+            
             state.user.token = sessionStorage.getItem('Auth')
         },
         logoutUser:(state,data)=>{
-            sessionStorage.setItem('Auth',data.token)
+            console.log("data token " + data.token)
+            sessionStorage.removeItem("Auth")
             state.user.token = sessionStorage.getItem('Auth')
         },
         userData:(state,data)=>{
-            console.log(data)
             state.user.rides = data.data.rides
             state.user.shopping = data.data.shopping
             state.user.packages = data.data.packages
+            state.user.data = data.data.user
         },
         cartItems:(state,products)=>{
             state.products.products = products.data.items
+            console.log(products.data.items)
             let total = 0
             for (let index = 0; index < products.data.items.length; index++) {
                 total += Number(products.data.items[index].total)       
             }
             state.products.total = total
         },
+        // cartTotal:(state,res)=>{
+        //     state.products.total = total
+        // },
         riderResponse:(state,data)=>{
             console.log(data.data)
             state.rider.data = data.data
@@ -265,8 +298,11 @@ const store = createStore({
                 state.products.confirmed = false
             }
         },
+        setDestination:(state,res)=>{
+            state.products.destination = res.data.destination
+        },
         setNumber:(state,res)=>{
-            state.products.number = res.data.number
+            state.products.numberToCall = res.data.number
         },
         confirmationCode:(state,res)=>{
             state.products.mpesaCode = res.data.code
