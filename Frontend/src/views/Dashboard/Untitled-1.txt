@@ -1,0 +1,7 @@
+tunnels:
+  tunnel1:
+    addr: 5174
+    proto: http
+  tunnel2:
+    addr: 8000
+    proto: http
