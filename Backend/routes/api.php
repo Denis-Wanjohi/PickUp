@@ -50,6 +50,6 @@ Route::middleware('auth:sanctum')->group(function(){
     
 });
    
-Route::post('/register',[AuthController::class,'register']);
-Route::post('/login',[AuthController::class,'login']);
-Route::post('/logout',[AuthController::class,'logout']);
+Route::post('/register',[AuthController::class,'register'])->middleware('cors');
+Route::post('/login',[AuthController::class,'login'])->middleware('cors');
+Route::post('/logout',[AuthController::class,'logout'])->middleware('cors');
