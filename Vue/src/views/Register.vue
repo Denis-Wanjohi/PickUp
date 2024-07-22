@@ -62,7 +62,7 @@ function register(){
             })
         })
         .catch((err)=>{
-
+            console.log(err)
             error.value = err.response.data.errors
 
             // if(err.response.data.errors.email){
