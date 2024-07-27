@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-[60px] bg-cyan-700 flex justify-around">
         <div class="w-3/4 flex justify-center place-items-center font-bold text-3xl" style=" font-family: comic sans ms">
-            <router-link :to="{name:'Home'}">KiriRide</router-link>
+            <router-link :to="{name:'Dashboard'}">KiriRide</router-link>
         </div>
         <div class="w-fit sm:flex px-5 justify-around place-items-center space-x-10 sm:block hidden">
             <div>

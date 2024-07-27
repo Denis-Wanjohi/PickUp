@@ -60,6 +60,7 @@ const store = createStore({
             return data
         },
         async login({commit},user){
+            console.log(user)
             const {data} = await axiosClient.post('/login',user)
             commit('loginUser',data)
             return data

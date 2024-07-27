@@ -1,9 +1,7 @@
 <template>
-  <div class="w-screen h-screen   flex justify-center  place-items-center bg-[url('images/car.jpg')] "   >
+  <!-- <div class="w-screen h-screen   flex justify-center  place-items-center bg-[url('images/car.jpg')] "   >
         <div class="w-screen sm:w-[50%] h-[100vh] bg-slate-200 opacity-85   grid place-content-center text-center">
             <div class="border rounded px-2 py-5 my-5 font-bold text-3xl  shadow-emerald-300 shadow text-black text-left font-sans space-x-1 space-y-3 " >
-                <!-- style="font-family:Bradley Hand ITC;" -->
-
                 <p class="">WE DELIVER,</p>
                 <p class="">SAVE ON YOUR TIME ON THE GO</p>
                 <p class="">&</p>
@@ -19,19 +17,30 @@
                     </router-link>
                 </button>
             </div>
-            <!-- <div>
-                <button class="bg-pink-500 flex  font-bold justify-center align-middle place-items-center mx-auto hover:bg-pink-600 px-3 py-2  rounded-lg shadow-xl shadow-black">
-                    <router-link :to="{name:'Home'}" class="flex place-items-center">
-                        GET  STARTED
-                        <ArrowRightIcon class="w-7"/>
-                    </router-link>
-                </button>
-            </div> -->
         </div>
         <div class="hidden sm:block w-[50%] h-[100vh] bg-slate-500 opacity-90 grid place-content-center text-center gap-3">
             <img :src="currentImage" class=" rounded-tl-[50px] rounded-br-[50px] px-5 max-h-[300px] min-h-[300px] mx-auto" alt="">
             <p class="font-mono animate-fade-in-down">{{currentDesc}}</p>
         </div>
+  </div> -->
+  <div class="w-screen h-[90vh] bg-red">
+    <!-- <div  class="w-screen h-full border  bg-[url('/images/blur_bg.jpeg')] rounded-b-[30%]"></div> -->
+     <v-parallax src="/images/wooden_wall.jpg">
+        <div class="flex align-center  w-full h-full">
+            <div class="w-1/2  mx-10">
+                <div>
+                    <div class="text-2xl font-semibold">STEP UP WITH</div>
+                    <div class="text-5xl font-bold">FAST AND THE BEST SERVICES</div>
+                    <div class="text-wrap">Services from shopping done for you upto your boda guy  still being the package delivery guy</div>
+                </div>
+                <div class="flex">
+                    <div class="px-3 py-2 mx-3 my-1 font-bold bg-amber-600 rounded border border-brown hover:text-black hover:bg-white cursor-pointer">Quick Ride</div>
+                    <div class="px-3 py-2 mx-3 my-1 font-bold bg-white rounded border border-amber hover:bg-amber-600 cursor-pointer">Explore</div>
+                </div>
+               
+            </div>
+        </div>
+     </v-parallax>
   </div>
 </template>
 
