@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    <!-- <div class="card">
         <Splitter  class="max-h-[400px] mb-8 mx-5">
             <SplitterPanel class="flex items-center justify-center" size="75"> 
                 <RecentActivities></RecentActivities>
@@ -32,9 +32,16 @@
                 <DataActivities></DataActivities>
             </SplitterPanel>
         </Splitter>
-    </div>
+    </div> -->
 
-    <RideActivities></RideActivities>
+ 
+    <!-- <RideData></RideData> -->
+    <!-- <DeliveryData></DeliveryData> -->
+    <!-- <RidesData></RideData> -->
+    
+        <ShoppingData></ShoppingData>
+
+
     
     
 </template>
@@ -45,10 +52,12 @@ import RideIconVue from "../../components/Icons/RideIcon.vue"
 import ShoppingIconVue from "../../components/Icons/ShoppingIcon.vue"
 import RecentActivities from "./RecentActivities_Admin.vue"
 import DataActivities from "./DataActivities_Admin.vue"
-import RideActivities from "./RideActivities_Admin.vue"
+import RideData from "./Rides_Admin/RideData_Admin.vue"
+import DeliveryData from "./Delivery_Admin/DeliveryData_Admin.vue"
+import ShoppingData from "./Shopping_Admin/ShoppingData_Admin.vue"
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
-
+import Fieldset from 'primevue/fieldset';
 const service = [
     {
         name:'Ride',

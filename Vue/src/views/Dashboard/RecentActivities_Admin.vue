@@ -6,7 +6,6 @@
                 <span class="text-xl font-bold">Recent Activities</span>
                 <Button icon="pi pi-refresh" rounded raised />
             </div>
-            
             <DataTable :value="products" removableSort size="small" tableStyle="min-width: 50rem">
                 <Column field="activity" sortable header="Activity"></Column>
                 <Column field="rider" sortable header="Rider"></Column>
@@ -21,7 +20,7 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import    Button from 'primevue/button'
+import Button from 'primevue/button'
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 import { ref, onMounted } from 'vue';
