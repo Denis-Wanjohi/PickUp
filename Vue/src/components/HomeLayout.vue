@@ -5,19 +5,22 @@
         </div>
         <div class="w-fit sm:flex px-5 justify-around place-items-center space-x-10 sm:block hidden">
             <div>
-                <!-- <router-link class="bg-purple-500  text-white py-2 px-2 rounded-lg hover:bg-purple-800 cursor-pointer hover:text-black" :to="{name:'Shopping'}">Shopping</router-link>
-                <router-link to="shopping">Shopping</router-link> -->
                 <a href="shopping" class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black">Shopping</a>
             </div>
             <div>
-                <!-- <router-link class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black" :to="{name:'Transport'}">Transport</router-link> -->
                  <a href="transport" class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black">Transport</a>
             </div>
             <div>
-                <!-- <router-link class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black" :to="{name:'PackageDelivery'}">PackageDelivery</router-link>
-                <router-link to="shopping">hello</router-link> -->
                 <a href="packageDelivery" class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black">Delivery</a>
             </div>
+            <div>
+                <Menu  class="cursor-pointer "></Menu>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 512 512">
+                    <rect width="512" height="512" fill="none" />
+                    <path fill="currentColor" d="M332.64 64.58C313.18 43.57 286 32 256 32c-30.16 0-57.43 11.5-76.8 32.38c-19.58 21.11-29.12 49.8-26.88 80.78C156.76 206.28 203.27 256 256 256s99.16-49.71 103.67-110.82c2.27-30.7-7.33-59.33-27.03-80.6M432 480H80a31 31 0 0 1-24.2-11.13c-6.5-7.77-9.12-18.38-7.18-29.11C57.06 392.94 83.4 353.61 124.8 326c36.78-24.51 83.37-38 131.2-38s94.42 13.5 131.2 38c41.4 27.6 67.74 66.93 76.18 113.75c1.94 10.73-.68 21.34-7.18 29.11A31 31 0 0 1 432 480" />
+                </svg> -->
+            </div>
+            
         </div>
         <div  class="grid place-content-center text-white sm:hidden">
             <svg v-if="menuView === false" @click="viewMenu" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24"><path fill="white" d="M19 17H5c-1.103 0-2 .897-2 2s.897 2 2 2h14c1.103 0 2-.897 2-2s-.897-2-2-2m0-7H5c-1.103 0-2 .897-2 2s.897 2 2 2h14c1.103 0 2-.897 2-2s-.897-2-2-2m0-7H5c-1.103 0-2 .897-2 2s.897 2 2 2h14c1.103 0 2-.897 2-2s-.897-2-2-2"/></svg>
@@ -25,21 +28,7 @@
         </div>
         
     </div>
-    <!-- <div class="bg-slate-500 flex justify-end sm:block inset-0" v-if="menuView" >
-        <div class="bg-slate-400 w-1/2  h-fit z-10 absolute rounded-md">
-            <div class="text-center space-y-5 py-5">
-                <div class="hover:bg-slate-800 hover:text-white">
-                    <router-link @click="viewMenu" :to="{name:'Shopping'}">Shopping</router-link>
-                </div>
-                <div class="hover:bg-slate-800 hover:text-white">
-                    <router-link @click="viewMenu" :to="{name:'Transport'}">Transport</router-link>
-                </div>
-                <div class="hover:bg-slate-800 hover:text-white">
-                    <router-link @click="viewMenu" :to="{name:'PackageDelivery'}">Package Delivery</router-link>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
 
 
     <div>
@@ -62,11 +51,9 @@
 </template>
 <script setup>
 import {ref} from 'vue'
-import { Bars3Icon,XMarkIcon } from '@heroicons/vue/24/outline';
-import { VSelect } from 'vuetify/lib/components/index.mjs';
 import store from '../store'
 import route from  '../router'
-
+import Menu from './Menu.vue'
 const menuView = ref(false)
 
 function viewMenu(){

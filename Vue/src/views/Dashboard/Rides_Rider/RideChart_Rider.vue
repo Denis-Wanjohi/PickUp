@@ -2,14 +2,12 @@
 <template>
    <div class="card h-[90%] p-3  " >
       <div class="w-full  flex justify-end">
-         <div class="my-auto font-bold">Number of Rides</div>
+         <div class="my-auto font-bold">Number of Rides(rider)</div>
          <Button label="Week" class="mx-2" @click="selectedTime('week')"></Button>
          <Button label="Month" class="mx-2" @click="selectedTime('month')"></Button>
          <Button label="Year" class="mx-2"  @click="selectedTime('year')"></Button>
       </div>
-      <!-- <Chart  class="h-full" type="line" :data="chartData" :options="chartOptions" /> -->
-      <Chart type="bar" :data="chartData" :options="chartOptions" class="h-[30rem]"  />
-
+      <Chart  class="h-full" type="line" :data="chartData" :options="chartOptions" />
    </div>
 </template>
 
@@ -69,7 +67,6 @@ const setChartOptions = () => {
    const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
 
    return {
-       indexAxis: 'y',
        maintainAspectRatio: false,
        aspectRatio: 0.6,
        plugins: {

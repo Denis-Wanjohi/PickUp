@@ -1,7 +1,7 @@
 
 <template>
     <div class="card">
-        <div class="text-center text-xl font-bold">Shopping history</div>
+        <div class="text-center text-xl font-bold">Shopping history(client)</div>
 
         <DataTable removableSort scrollable  :value="orders" v-model:expandedRows="expandedRows"  v-model:filters="filters" @rowExpand="onRowExpand" @rowCollapse="onRowCollapse"
             :globalFilterFields="['orderNo','clinet_name','rider_name','destination','date','time','total','phone_number']"
@@ -52,10 +52,6 @@
 </template>
 
 <script setup>
-import Splitter from 'primevue/splitter';
-import SplitterPanel from 'primevue/splitterpanel';
-import ShoppingActivities from './ShoppingActivities_Admin.vue';
-import ShoppingChart from './ShoppingChart_Admin.vue';
 import {onMounted, ref} from 'vue'
 
 import DataTable from 'primevue/datatable';

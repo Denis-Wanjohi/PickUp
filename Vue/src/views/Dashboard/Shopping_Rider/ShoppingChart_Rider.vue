@@ -2,7 +2,7 @@
 <template>
    <div class="card h-[90%] p-3  " >
       <div class="w-full  flex justify-end">
-         <div class="my-auto font-bold">Number of Rides</div>
+         <div class="my-auto font-bold">Number of Rides(rider)</div>
          <Button label="Week" class="mx-2" @click="selectedTime('week')"></Button>
          <Button label="Month" class="mx-2" @click="selectedTime('month')"></Button>
          <Button label="Year" class="mx-2"  @click="selectedTime('year')"></Button>

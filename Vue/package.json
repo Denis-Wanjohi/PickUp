@@ -17,6 +17,7 @@
     "chart.js": "^4.4.3",
     "maska": "^3.0.0-beta4",
     "masked": "^1.2.1",
+    "primeicons": "^7.0.0",
     "primevue": "^4.0.1",
     "uuid": "^9.0.1",
     "vue": "^3.3.11",

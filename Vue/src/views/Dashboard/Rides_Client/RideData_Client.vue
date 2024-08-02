@@ -1,7 +1,7 @@
 
 <template>
     <div class="w-screen ">
-        <div class="text-center font-bold text-4xl py-3">RIDES ANALYSIS</div>
+        <div class="text-center font-bold text-4xl py-3">RIDES ANALYSIS(client)</div>
         <Splitter class="max-h-[400px]  px-5 mx-5">
             <SplitterPanel class="overflow-y-scroll">
                 <RideActivities></RideActivities> 
@@ -16,8 +16,8 @@
 <script setup>
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
-import RideActivities from './RideActivities_Admin.vue';
-import RideChart from './RideChart_Admin.vue';
+import RideActivities from './RideActivities_Client.vue';
+import RideChart from './RideChart_Client.vue';
 
 
 

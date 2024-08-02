@@ -10,6 +10,7 @@ import Home from '../views/Dashboard.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import HomeLayout from '../components/HomeLayout.vue';
+import RiderRegistration from '../views/Admin/RiderRegistrationView.vue'
 
 const routes = [ 
     {
@@ -41,6 +42,11 @@ const routes = [
         name:'Register',
         component:Register
     },
+    {
+        path:'/addRider',
+        name:'RiderRegistration',
+        component:RiderRegistration,
+    }
     
     
 ]
@@ -64,20 +70,6 @@ router.beforeEach((to,from,next)=>{
             store.state.paths.destinations = []
             next()
     }
-    // else{
-    //     if(store.state.paths.destinations.length !== 0){
-    //         // if(store.state.paths.destinations[2] === 'Login'){
-    //         //     console.log("one")
-    //         //    next() 
-    //         // }
-    //         // else{
-    //         //     // next(store.state.paths.destinations[1])
-    //         // }
-    //         console.log(store.state.paths.destinations[2])
-    //         next()
-    //     }
-    // }
-    // console.log(store.state.paths.destinations)
     
 })
 export default router

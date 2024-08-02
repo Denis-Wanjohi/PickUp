@@ -1,8 +1,8 @@
 
 <template>
     <div class="card">
-        <div class="text-center text-xl font-bold">Rides history</div>
-        <DataTable stripedRows  v-model:filters="filters" :value="customers" paginator showGridlines :rows="10" dataKey="id"
+        <div class="text-center text-xl font-bold">Delivery history(client)</div>
+        <DataTable stripedRows selectionMode="single" v-model:filters="filters" :value="customers" paginator showGridlines :rows="10" dataKey="id"
                 filterDisplay="menu" :loading="loading" :globalFilterFields="['name', 'rider', 'location','destination','date','time']">
             <template #header>
                 <div class="flex justify-between">
@@ -115,6 +115,19 @@ import DatePicker from 'primevue/datepicker';
 
 const customers = ref();
 const filters = ref();
+const representatives = ref([
+    { name: 'Amy Elsner', image: 'amyelsner.png' },
+    { name: 'Anna Fali', image: 'annafali.png' },
+    { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
+    { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
+    { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
+    { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
+    { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
+    { name: 'Onyama Limba', image: 'onyamalimba.png' },
+    { name: 'Stephen Shaw', image: 'stephenshaw.png' },
+    { name: 'XuXue Feng', image: 'xuxuefeng.png' }
+]);
+const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
 const loading = ref(true);
 
 const CustomerService = {

@@ -36,7 +36,7 @@
                         {{ value.name }}
                     </div>   
                     <div class="text-2xl">
-                        <Knob v-model="tally" readonly ></Knob>
+                        <Knob v-model="tally"></Knob>
                     </div>                 
                 </div>
 
@@ -71,9 +71,9 @@ import RideIconVue from "../../components/Icons/RideIcon.vue"
 import ShoppingIconVue from "../../components/Icons/ShoppingIcon.vue"
 import RecentActivities from "./RecentActivities_Admin.vue"
 import DataActivities from "./DataActivities_Admin.vue"
-import RideData from "./Rides_Admin/RideData_Admin.vue"
-import DeliveryData from "./Delivery_Admin/DeliveryData_Admin.vue"
-import ShoppingData from "./Shopping_Admin/ShoppingData_Admin.vue"
+import RideData from "./Rides_Delivery/RideData_Delivery.vue"
+import DeliveryData from "./Delivery_Delivery/DeliveryData_Delivery.vue"
+import ShoppingData from "./Shopping_Delivery/ShoppingData_Delivery.vue"
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import Card from 'primevue/card';

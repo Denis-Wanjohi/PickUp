@@ -60,13 +60,12 @@ const store = createStore({
             return data
         },
         async login({commit},user){
-            console.log(user)
             const {data} = await axiosClient.post('/login',user)
             commit('loginUser',data)
             return data
         },
         async logout({commit},user){
-            console.log%("logging out")
+            console.log("logging out")
             const {data} = await axiosClient.post('/logout',user)
             commit('logoutUser',data)
             return data
@@ -74,6 +73,14 @@ const store = createStore({
         async userData({commit}){
             const data = await axiosClient.get('/home')
             commit('userData',data)
+        },
+        /**
+         * RIDER registration
+         */
+        async registerRider({commit},rider){
+            console.log('registering a rider')
+            const {data }  = await axiosClient.post('/registerRider')
+            return data;
         },
         /**
          * S H O P P I N G
@@ -86,47 +93,6 @@ const store = createStore({
         },
         async cartItems({commit}){
             const products = await axiosClient.get('/cartItems')
-            // commit('cartItems',products)
-            // let body =  JSON.stringify({
-            //     "BusinessShortCode": 174379,
-            //     "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTEzMjA1MTMw",
-            //     "Timestamp": "20240513205130",
-            //     "TransactionType": "CustomerPayBillOnline",
-            //     "Amount": 1,
-            //     "PartyA": 254708475592,
-            //     "PartyB": 174379,
-            //     "PhoneNumber": 254708475592,
-            //     "CallBackURL": "https://mydomain.com/path",
-            //     "AccountReference": "BodaBodaRide",
-            //     "TransactionDesc": "Payment of X" 
-            //   })
-            // const x = await axiosClient.post('/sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',body)
-            // console.log(x);
-            // let headers = new Headers();
-            // headers.append("Content-Type", "application/json");
-            // headers.append("Authorization", `Bearer ${store.state.user.token}`);
-            
-            // fetch("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", {
-            //   method: 'POST',
-            //   headers,
-            //   body: JSON.stringify({
-            //     "BusinessShortCode": 174379,
-            //     "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwNTEzMjA1MTMw",
-            //     "Timestamp": "20240513205130",
-            //     "TransactionType": "CustomerPayBillOnline",
-            //     "Amount": 1,
-            //     "PartyA": 254708475592,
-            //     "PartyB": 174379,
-            //     "PhoneNumber": 254708475592,
-            //     "CallBackURL": "https://mydomain.com/path",
-            //     "AccountReference": "BodaBodaRide",
-            //     "TransactionDesc": "Payment of X" 
-            //   })
-            // })
-            //   .then(response => response.text())
-            //   .then(result => console.log(result))
-            //   .catch(error => console.log(error));
-
             commit('cartItems',products)
             console.log(products)
             return products.data
