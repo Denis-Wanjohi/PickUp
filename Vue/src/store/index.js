@@ -55,6 +55,7 @@ const store = createStore({
     getters:{},
     actions:{
         async register({commit},user){
+            console.log(user)
             const {data} = await axiosClient.post('/register',user)
             commit('registerUser',data)
             return data
@@ -78,8 +79,8 @@ const store = createStore({
          * RIDER registration
          */
         async registerRider({commit},rider){
-            console.log('registering a rider')
-            const {data }  = await axiosClient.post('/registerRider')
+            console.log(rider)
+            const {data }  = await axiosClient.post('/registerRider',rider)
             return data;
         },
         /**
@@ -107,7 +108,10 @@ const store = createStore({
             commit('cartItems',res)
         },
         async removeFromCart({commit},item){
-            const res = await axiosClient.post('/removeFromCart',item)
+            let id = {
+                'id':item
+            }
+            const res = await axiosClient.post('/removeFromCart',id)
             commit('cartItems',res)
         },
         // async cartTotal({commit}){

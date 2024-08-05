@@ -8,7 +8,9 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 import Aura from '@primevue/themes/aura';
+import ConfirmationService from 'primevue/confirmationservice';
 import App from './App.vue'
 const vuetify = createVuetify({
     components,
@@ -16,6 +18,8 @@ const vuetify = createVuetify({
   })
 
 createApp(App)
+.use(ToastService)
+.use(ConfirmationService)
 .use(store)
 .use(vuetify)
 .use(router)

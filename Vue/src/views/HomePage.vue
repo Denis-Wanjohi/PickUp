@@ -1,6 +1,6 @@
 <template>
 
-<v-app>
+
     <TopNav></TopNav>
     <HeroSection></HeroSection>
     <Regions></Regions>
@@ -8,7 +8,7 @@
     <CallToAction></CallToAction>
     <About></About>
     <Comment></Comment>  
-</v-app>
+
 
 
 <footer>

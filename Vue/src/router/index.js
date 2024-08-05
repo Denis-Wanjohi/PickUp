@@ -16,7 +16,8 @@ const routes = [
     {
         path:'/',
         name:'Home',
-        component:DashBoard
+        component:DashBoard,
+        meta:{requireAuth:false}
     },
     {
         path:'/home',
@@ -30,22 +31,26 @@ const routes = [
             {  path:'/checkout',name:'Checkout',component:ShoppingCheckout , meta:{requireAuth:true},},
             {  path:'/transport',name:'Transport',component:Transport, meta:{requireAuth:true},},
             {  path:'/packageDelivery',name:'PackageDelivery',component:PackageDelivery, meta:{requireAuth:true},},
+            {  path:'/addRider',name:'RiderRegistration',component:RiderRegistration,meta:{requireAuth:true},}
         ]
     },
     {
         path:'/login',
         name:'Login',
-        component:Login
+        component:Login,
+        meta:{requireAuth:false}
     },
     {
         path:'/register',
         name:'Register',
-        component:Register
+        component:Register,
+        meta:{requireAuth:false}
     },
     {
         path:'/addRider',
         name:'RiderRegistration',
         component:RiderRegistration,
+        meta:{requireAuth:true}
     }
     
     
@@ -54,22 +59,14 @@ const router  = createRouter({
     history: createWebHistory(),
     routes
 })
-router.beforeEach((to,from,next)=>{
-    store.state.paths.destinations.push(to.name)
-    if(to.meta.requireAuth  && store.state.user.token === null){
-        // store.state.paths.destinations.push(to.name)
-        next({name:'Login'})
-        // store.state.paths.destinations.push(to.name)
-    }else if((to.name == 'Login' || to.name == 'Register'  || to.name == 'DashbBoard') && store.state.user.token != null){
-        next({name:'Dashboard'})
-    }
-    else if(to.meta.requireAuth  && store.state.user.token !== null){
-        next(store.state.paths.destinations[1])
-        store.state.paths.destinations = []
-    }else{
-            store.state.paths.destinations = []
-            next()
-    }
-    
-})
+// router.beforeEach((to,from,next)=>{
+//     // store.state.paths.destinations.push(to.name)
+//     if(to.meta.requireAuth  && store.state.user.token === null){
+//         next({name:'Login'})
+//     }else if(to.path == '/login' || to.path == '/register' || to.path == '/' && store.state.user.token !== null ){
+//         next({name:'Dashboard'})
+//     }else{
+//         next()
+//     }
+// })
 export default router

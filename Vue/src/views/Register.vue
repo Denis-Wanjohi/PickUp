@@ -48,7 +48,7 @@
 
       <div>
         <label for="names" class="block text-900 font-medium mb-2">Full Names</label>
-        <InputText id="names" type="text" v-model="user.email" required placeholder="Full names" class="w-full mb-3" />
+        <InputText id="names" type="text" v-model="user.fullname" required placeholder="Full names" class="w-full mb-3" />
 
         <label for="email1" class="block text-900 font-medium mb-2">Email</label>
         <InputText id="email1" type="text" v-model="user.email" required placeholder="Email address" class="w-full mb-3" />
@@ -63,8 +63,10 @@
         <InputText id="passwordConfirmation" type="password" required v-model="user.password_confirmation" placeholder="Confirm password" class="w-full mb-3" />
 
 
-
-          <Button label="Sign Up" icon="pi pi-user" class="w-full" type="submit"></Button>
+        <div class="text-red text-sm" v-for="err in error">
+            {{ err[0] }}
+        </div>
+        <Button label="Sign Up" icon="pi pi-user" class="w-full" type="submit"></Button>
       </div>
     </div>
   </form>
@@ -93,20 +95,12 @@ function register(){
     store.dispatch('register',user)
         .then((data)=>{
             router.push({
-                name:'Home'
+                name:'Dashboard'
             })
         })
         .catch((err)=>{
             console.log(err)
             error.value = err.response.data.errors
-
-            // if(err.response.data.errors.email){
-            //     return
-            // }else if(err.response.data.errors.password){
-            //     error.value =  err.resonse.data.errors.password
-            //     return
-            // }
-            // error.value  = err.response.data.errors.password
         })
 }
 function closeError(ev){

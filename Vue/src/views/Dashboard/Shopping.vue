@@ -1,51 +1,128 @@
 <template>
   <div class="  h-screen pb-5">
-    <div class="w-full text-4xl  text-center py-5 font-semibold">
-        <h2 class="mx-auto">SHOPPING</h2>
-        <p class="text-sm font-light">lets  get it done...</p>
-    </div>
-    <div class="h-fit overflow-auto mb-5 ">
-        
-        <form  @submit.prevent="addToCart"  class="border px-3 py-2  bg-slate-200 sm:w-3/4 mx-auto rounded shadow place-items-center text-center">
-            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
-                <label for="productName" class="font-bold">Product name:</label>
-                <input type="text" required name="productName"  v-model="product.product" class="border rounded-sm sm:w-3/4 w-full focus:ring-2 my-1 focus:ring-indigo-600"  placeholder="maize flour">
-            </div>
-            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
-                <label for="quantity" class="font-bold">Quantity:</label>
-                <div class="flex justify-center">
-                    <input type="text" required name="quantity" v-model="product.quantity" class="border rounded-sm w-1/2  focus:ring-2 my-1 focus:ring-indigo-600" placeholder="2">
-                    <select name="type" id="type" v-model="product.type" required class="border rounded-sm w-1/2 bg-white text-sm focus:ring-2 my-1 focus:ring-indigo-600">
-                        <option value="litre">litre</option>
-                        <option value="kilograms">kilograms (kg)</option>
-                        <option value="pieces">pieces/packets</option>
-                    </select>
+    <Toast/>
+    <div class="sm:w-1/2 w-full  px-5 border border-white m-auto">
+            <form  class="border-b  border-gray-900/10 pb-12" @submit.prevent="addToCart">
+                <h2 class=" text-2xl pt-5 font-semibold leading-7 text-gray-900 text-center">SHOPPING</h2>
+                <!-- <p class="mt-1 text-sm leading-6 text-gray-400 text-center">Incase of any inquiry please reach out to us through this form.Thank you  :)</p> -->
+                <!-- <p class="mt-1 text-sm leading-6 text-gray-400 text-center">Please fill in correct details*</p> -->
+
+
+                <div v-if="!isFormFilled" class="mt-10  grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 place-items-center">
+
+                    <div class="sm:col-span-3">
+                    <FloatLabel>
+                        <InputText id="product" required v-model="product.product" />
+                        <label for="product">Product Name</label>
+                    </FloatLabel>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                    <FloatLabel>
+                        <InputText id="quantity" type="number" required v-model="product.quantity" />
+                        <label for="quantity">Quantity</label>
+                    </FloatLabel>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                    <FloatLabel>
+                        <Select v-model="product.type" :options="types" optionLabel="name" placeholder="type" class="w-full md:w-56" />
+                        <label for="type">Quantity in :</label>
+                    </FloatLabel>
+                    </div>
+
+                    
+                    <div class="sm:col-span-3">
+                    <FloatLabel>
+                        <InputText id="company" required v-model="product.company" />
+                        <label for="company">Company</label>
+                    </FloatLabel>
+                    </div>
+
+                    <!-- PHONE NUMBER -->
+                    <div class="sm:col-span-3">
+                    <FloatLabel>
+                        <InputText id="shop" required v-model="product.shop" />
+                        <label for="shop">Shop</label>
+                    </FloatLabel>
+                    </div>
+
+                    <!-- Extra info -->
+                    <div class="sm:col-span-6  w-full px-10 ">
+                    <FloatLabel>
+                        <Textarea v-model="product.info" class="w-[100%]" />
+                        <label>Extra information</label>
+                    </FloatLabel>
+                    </div>
+
+                    <button class="py-3 bg-blue rounded-md sm:col-span-6 w-3/4 font-semibold mx-auto" @click="submitted" >
+                        <v-progress-circular indeterminate v-if="submittedForm"></v-progress-circular>
+                        <span v-else>submit</span>
+                    </button>
                 </div>
-            </div>
-            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
-                <label for="price" class="font-bold">Estimated Price: <br> <span class="text-xs">(per kg/litre/piece )</span></label>
-                <input type="text" required name="price" v-model="product.price" class="border rounded-sm sm:w-3/4 w-full  focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="120">
-            </div>
-            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
-                <label for="price" class="font-bold">Brand/Company:</label>
-                <input type="text" required autocomplete="none" name="price" v-model="product.company" class="border rounded-sm sm:w-3/4 w-full focus:ring-2 my-1 focus:ring-indigo-600 "  placeholder="soko">
-            </div>
-            <div class=" sm:flex justify-between align-middle place-items-center w-full  ">
-                <label for="placeToBuy" class="font-bold">Place to buy:</label>
-                <input type="text" required name="placeToBuy" v-model="product.shop" class="border rounded-sm sm:w-3/4 w-full  focus:ring-2 my-1 focus:ring-indigo-600 " placeholder="sayen">
-            </div>
-            <div class="">
-                <label for="extraInfo" class="font-bold  text-left">Add Extra infomartion here:</label>
-                <textarea name="extraInfo"  v-model="product.extraInformation"  id="" class="w-full min-h-[50px] max-h-[100px] rounded-md  focus:border-xl  focus:ring-2 my-1 focus:ring-indigo-600 bg-white " placeholder="extra information goes here"></textarea>
-            </div>
-            <div>
-                <button v-if="!disabledAddBtn"  type="submit" class="bg-blue-600 hover:bg-blue-700 w-1/2 py-2  font-bold rounded-md">
-                    Add to cart
-                </button>
-                <VProgressCircular color="blue"  indeterminate="2" rotate="100" bg-color="white" v-else></VProgressCircular>
-            </div>
-        </form> 
-    </div>
+
+                <!-- submitting -->
+                <div v-if="submitting" class="bg-blue-500 mx-auto sm:w-full sm:h-fit rounded text-center">
+                    <div class="w-full ">
+                        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 24 24">
+                        <rect width="10" height="10" x="1" y="1" fill="blue" rx="1">
+                            <animate id="svgSpinnersBlocksShuffle30" fill="freeze" attributeName="x" begin="0;svgSpinnersBlocksShuffle3b.end" dur="0.15s" values="1;13" />
+                            <animate id="svgSpinnersBlocksShuffle31" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle38.end" dur="0.15s" values="1;13" />
+                            <animate id="svgSpinnersBlocksShuffle32" fill="freeze" attributeName="x" begin="svgSpinnersBlocksShuffle39.end" dur="0.15s" values="13;1" />
+                            <animate id="svgSpinnersBlocksShuffle33" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle3a.end" dur="0.15s" values="13;1" />
+                        </rect>
+                        <rect width="10" height="10" x="1" y="13" fill="orange" rx="1">
+                            <animate id="svgSpinnersBlocksShuffle34" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle30.end" dur="0.15s" values="13;1" />
+                            <animate id="svgSpinnersBlocksShuffle35" fill="freeze" attributeName="x" begin="svgSpinnersBlocksShuffle31.end" dur="0.15s" values="1;13" />
+                            <animate id="svgSpinnersBlocksShuffle36" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle32.end" dur="0.15s" values="1;13" />
+                            <animate id="svgSpinnersBlocksShuffle37" fill="freeze" attributeName="x" begin="svgSpinnersBlocksShuffle33.end" dur="0.15s" values="13;1" />
+                        </rect>
+                        <rect width="10" height="10" x="13" y="13"  fill="brown" rx="1">
+                            <animate id="svgSpinnersBlocksShuffle38" fill="freeze" attributeName="x" begin="svgSpinnersBlocksShuffle34.end" dur="0.15s" values="13;1" />
+                            <animate id="svgSpinnersBlocksShuffle39" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle35.end" dur="0.15s" values="13;1" />
+                            <animate id="svgSpinnersBlocksShuffle3a" fill="freeze" attributeName="x" begin="svgSpinnersBlocksShuffle36.end" dur="0.15s" values="1;13" />
+                            <animate id="svgSpinnersBlocksShuffle3b" fill="freeze" attributeName="y" begin="svgSpinnersBlocksShuffle37.end" dur="0.15s" values="1;13" />
+                        </rect>
+                        </svg>
+                    </div>
+                    <div class="font-mono text-3xl text-center">Submitting ....</div>
+                </div>
+                <!-- email sent -->
+                <div v-if="emailSent" class="bg-blue-500 mx-auto sm:full sm:h-fit rounded text-center">
+                    <div class="w-full ">
+                        <svg class="mx-auto"  xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 24 24">
+                        <g stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <circle cx="12" cy="12" r="9" fill="blue" fill-opacity="0.3" />
+                            <path fill="none" stroke-dasharray="14" stroke-dashoffset="14" d="M8 12L11 15L16 10">
+                            <animate fill="freeze" attributeName="stroke-dashoffset" dur="2s" values="14;0" />
+                            </path>
+                        </g>
+                        </svg>
+                    </div>
+                    <div class="font-mono text-3xl">Submitted!</div>
+                </div>
+                <!-- failed -->
+                <div v-if="failedSubmit" class="bg-blue-500  mx-auto sm:full sm:h-fit rounded text-center">
+                    <div class="w-full ">
+                        <svg class="mx-auto" xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="0 0 24 24">
+                        <rect width="24" height="24" fill="none" />
+                        <g fill="none" stroke="#ff8000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z">
+                            <animate fill="freeze" attributeName="stroke-dashoffset" dur="1.5s" values="60;0" />
+                            </path>
+                            <path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14">
+                            <animate fill="freeze" attributeName="stroke-dashoffset" begin="1.8s" dur="0.6s" values="6;0" />
+                            </path>
+                        </g>
+                        <circle cx="12" cy="17" r="1" fill="#ff8000" fill-opacity="0">
+                            <animate fill="freeze" attributeName="fill-opacity" begin="2.4s" dur="1.2s" values="0;1" />
+                        </circle>
+                        </svg>
+                    </div>
+                    <div class="font-mono text-3xl">Failed to submit!</div>
+                </div>
+            </form>
+        </div>
 
     <!-- 
         SHOPPING LIST
@@ -55,63 +132,24 @@
         <div class="font-bold text-center text-xl my-3">
                 The shopping list
         </div>
-        <div class="w-screen overflow-x-auto">
-            <table class="px-2 mx-auto text-center border-2 border-black">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <!-- <th class="sm:block hidden">Price</th>
-                        <th class="sm:block hidden">Brand</th>
-                        <th class="sm:block hidden">Shop</th> -->
-                        <th>Total</th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tbody class="border">
-                   
-                    <tr v-for="item,index in cart.products" key="index " class="border">
-                        <td>{{ index+1 }}</td>
-                        <td>{{ item.product }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <!-- <td class="sm:block hidden">{{ item.price }}</td>
-                        <td class="sm:block hidden">{{ item.company }}</td>
-                        <td class="sm:block hidden">{{ item.shop }}</td> -->
-                        <td>{{ item.total }}</td>
-                        <td class="flex  justify-around">
-                            <div>
-                                <button @click="editProduct(item.id)" class="my-1 bg-green-500 hover:bg-green-600 rounded-md px-2 py-1 border text-sm font-bold">
-                                    <PencilIcon  class="w-5"></PencilIcon>
-                                </button>
-                                <!-- <VProgressCircular color="green" indeterminate=""></VProgressCircular> -->
-                            </div>
-                            <div>
-                                <button  @click="removeFromCart(item.id)" class="my-1 bg-red-500 hover:bg-red-600 rounded-md px-2 py-1 border text-sm font-bold">
-                                    
-                                    <TrashIcon v-if="!deleteBtn"  class="w-5"></TrashIcon>
-
-                                    <div v-else>
-                                        <p v-if="item.id === deletedItem">
-                                            <VProgressCircular color="white" size="20" indeterminate="" width="3"></VProgressCircular>
-                                        </p>
-                                        <TrashIcon v-else  class="w-5"></TrashIcon>
-                                    </div>
-                                   
-                                </button>
-                                <!-- <VProgressCircular v-else color="red" indeterminate=""></VProgressCircular> -->
-                            </div>
-                           
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" class="font-bold text-end">Total:</td>
-                        <td >{{total.total}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
+        <Toast />
+        <ConfirmPopup></ConfirmPopup>
+        <DataTable :value="cart.products" size="small" tableStyle="min-width: 50rem">
+            <Column field="id" header="ID."></Column>
+            <Column field="product" header="Product"></Column>
+            <Column field="quantity" header="Quantity"></Column>
+            <Column field="company" header="Company"></Column>
+            <Column field="shop" header="Shop"></Column>
+            <Column field="info" header="Info"></Column>
+            <Column  header="Action">
+                <template #body="slotProps">
+                    <Button label="Edit" class="mx-2" @click="edit(slotProps)"  severity="success" />
+                    <Button @click="confirm2($event,slotProps)" label="Delete" severity="danger" outlined></Button>
+                </template>
+                
+            </Column>
+        </DataTable>
+  
     </div>
 
     <!-- 
@@ -129,7 +167,23 @@
 import { ref } from "vue";
 import store from '../../store'
 import { PencilIcon,TrashIcon } from "@heroicons/vue/24/outline";
-import {  VProgressCircular } from 'vuetify/lib/components/index.mjs';
+import InputText from 'primevue/inputtext'
+import FloatLabel from 'primevue/floatlabel'
+import Textarea from 'primevue/textarea';
+import Select from 'primevue/select'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Button from 'primevue/button';
+import { useToast } from "primevue/usetoast";
+import ConfirmPopup from 'primevue/confirmpopup';
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+const toast = useToast();
+
+let editItem = (data) => {
+    
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Item updated', life: 3000 });
+};
 store.dispatch('userData')
 
 const product = ref({
@@ -139,49 +193,59 @@ const product = ref({
     price:'',
     company:'',
     shop:'',
-    extraInformation:''
+    info:''
 })
+const types = ref([
+    { name: 'Kilograms', code: 'kg' },
+    { name: 'Litres', code: 'l' },
+    { name: 'pieces', code: 'pieces' },
+])
 const disabledAddBtn = ref(false)
-const editBtn = ref(false)
 const deleteBtn = ref(false)
-const deletedItem = ref()
 const productId = ref()
-store.dispatch('cartItems')
-const total = ref(store.state.products)
 const cart = ref()
+store.dispatch('cartItems')
+.then((res)=>{
+    // console.log(res.items)
+})
+.catch(()=>{
+    alert('error fetching cart items')
+})
+
 cart.value  =  store.state.products
-console.log(cart.value)
-setTimeout(() => {
-    console.log(cart.value)
-}, 5000);
+
+
 const user = store.state.user
 function addToCart(){
     if(productId.value != null){
         disabledAddBtn.value = true
+        product.value.quantity = product.value.quantity + " " + product.value.type.code
        let  editedProduct = {
             'productId' : productId.value,
             'product' :  product.value
         }
         store.dispatch('editCart',editedProduct)
         .then((data)=>{
+            editItem(productId.value)
             product.value.product = '' 
             product.value.quantity = '' 
-            product.value.price = '' 
+            product.value.type = '' 
             product.value.company = '' 
             product.value.shop = '' 
-            product.value.extraInformation = '' 
+            product.value.info = '' 
             disabledAddBtn.value = false
         })
     }else{
         disabledAddBtn.value = true
+        product.value.quantity = product.value.quantity + " " + product.value.type.code
         store.dispatch('addToCart',product.value)
         .then((data)=>{
             product.value.product = '' 
             product.value.quantity = '' 
-            product.value.price = '' 
+            product.value.type = '' 
             product.value.company = '' 
             product.value.shop = '' 
-            product.value.extraInformation = ''
+            product.value.info = ''
             disabledAddBtn.value = false 
         })
         .catch((err)=>{
@@ -190,40 +254,60 @@ function addToCart(){
     }
 
 }
-function editProduct(item){
-    
-    let val = {
-        'id':item
-    }
-    store.dispatch('editProduct',val)
-    .then((data)=>{
-        productId.value  = data[0].id
-        product.value.product = data[0].product
-        product.value.quantity = data[0].quantity
-        product.value.price = data[0].price
-        product.value.company = data[0].company
-        product.value.shop = data[0].shop
-        product.value.extraInformation = data[0].extraInformation
-    })
-    .catch((err)=>{
+function edit(item){
+    // console.log(item.data.quantity)
 
-    })
+    let quantity_arr = item.data.quantity.split(" ")
+    console.log(quantity_arr);
+    if(quantity_arr[1] == 'l'){
+        quantity_arr[1] = { "name": "Litres", "code": "l" }
+    }else if(quantity_arr[1]  == 'kg'){
+        quantity_arr[1]  =  { "name": "Kilograms", "code": "kg" }
+    }else if(quantity_arr[1] == 'pieces'){
+        quantity_arr[1]  =  { "name": "pieces", "code": "pieces" }
+    }
+    productId.value = item.data.id   
+    product.value.product = item.data.product
+    product.value.quantity = quantity_arr[0]
+    product.value.type = quantity_arr[1]
+    product.value.company = item.data.company
+    product.value.shop = item.data.shop
+    product.value.info = item.data.info
+
+
+
 }
 function removeFromCart(item){
-    deletedItem.value = item
-    if(item){
-        deleteBtn.value = true
-    }
-    deleteBtn.value = true
-    let val = {
-        'id':item
-    }
-    store.dispatch('removeFromCart',val)
+    store.dispatch('removeFromCart',item.id)
     .then((data)=>{
       deleteBtn.value = false  
     })
     .catch((err)=>{
 
+    })
+}
+
+const confirm2 = (event,item) => {
+    confirm.require({
+        target: event.currentTarget,
+        message: 'This remove the item from the cart?',
+        icon: 'pi pi-info-circle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Remove',
+            severity: 'danger'
+        },
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted', life: 3000 });
+            removeFromCart(item.data)
+        },
+        reject: () => {
+            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
     })
 }
 </script>

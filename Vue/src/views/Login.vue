@@ -23,7 +23,7 @@
               </div> -->
               <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
           </div>
-
+          <div  class="text-red text-sm">{{ login_error }}</div>
           <Button label="Sign In" icon="pi pi-user" class="w-full" type="submit"></Button>
       </div>
     </div>
@@ -48,7 +48,7 @@ const user = {
     password:''
 }
 const login = ref(false)
-const error = ref()
+const login_error = ref()
 const errorTimer = ref()
 
 function userLogin(){
@@ -64,11 +64,12 @@ function userLogin(){
             // }
         })
         .catch((err)=>{
+            console.log("error seen")
             setTimeout(()=>{
-                error.value = ''
-            },3000)
+                login_error.value = ''
+            },5000)
             login.value = false
-            error.value = err.response.data.error
+            login_error.value = err.response.data.error
         })
 }
 function closeError(ev){
