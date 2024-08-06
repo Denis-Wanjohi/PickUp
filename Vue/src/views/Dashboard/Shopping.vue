@@ -157,10 +157,48 @@
      -->
      <div  v-if="cart.products.length !== 0">
         <div class="flex justify-center my-2">
-            <router-link :to="{name:'Checkout'}" class="bg-green-500 hover:bg-green-600 w-3/4 py-2 rounded-md text-center font-bold">CHECKOUT</router-link>
+            <div @click.prevent="checkout"  class="bg-green-500 hover:bg-green-600 w-1/2 py-2 rounded-md text-center font-bold cursor-pointer">CHECKOUT</div>
         </div>
      </div>
   </div>
+
+  <!-- checkout popup -->
+  <Dialog v-model:visible="visible" modal header="Checkout" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+    <div class="border w-full">
+        <div class="text-center" >Hello, Your shopping cart has 4 items</div>
+        <div class="text-grey-400  text-center text-sm">fill the form to finish the process</div>
+        <div class="mx-auto w-1/2 py-5">
+            <div class="my-4 mx-auto">
+                <FloatLabel>
+                    <InputText  id="product" v-model="userinfo.location" required />
+                    <label for="product">Delivery Location</label>
+                </FloatLabel>
+            </div>
+            <div class="my-5">
+                <FloatLabel>
+                    <Select required  v-model="userinfo.rider" :options="riders" optionLabel="name" placeholder="Select a rider" class="w-full md:w-56" />
+                    <!-- <label for="rider">Pick a rider</label> -->
+                </FloatLabel>
+            </div>
+            <div class="my-5">
+                <FloatLabel class="my-4">
+                    <InputMask id="phone" required  v-model="userinfo.phone" mask="+2549-9999-9999" placeholder="+2547-9999-9999" />
+                    <label for="phone">phone number</label>
+                </FloatLabel>
+            </div>
+            <div class="my-6">
+                <FloatLabel>
+                    <Textarea v-model="userinfo.info" class="w-[100%]" />
+                    <label>Extra information</label>
+                </FloatLabel>
+            </div>
+        </div>
+        <div class="w-full text-center">
+            <Button class="mx-auto w-1/2" @click.prevent="order" label="That all!" /> 
+        </div>
+
+    </div>
+</Dialog>
 </template>
 
 <script setup>
@@ -174,12 +212,35 @@ import Select from 'primevue/select'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Button from 'primevue/button';
+import Dialog from 'primevue/dialog';
+import InputMask from 'primevue/inputmask'
 import { useToast } from "primevue/usetoast";
 import ConfirmPopup from 'primevue/confirmpopup';
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 const toast = useToast();
-
+const visible = ref(false)
+const riders = ref([
+    { name: 'Kimi', code: 'NY' },
+    { name: 'Tommy', code: 'RM' },
+    { name: 'Johny', code: 'LDN' },
+    { name: 'Denny', code: 'IST' },
+    { name: 'Jowie', code: 'PRS' }
+]);
+function checkout(){
+    visible.value = true
+}
+function order(){
+    userinfo.value.rider = userinfo.value.rider['name']
+    store.dispatch('order',userinfo.value)
+    .then(()=>{
+        visible.value = false
+    })
+    .catch((err)=>{
+        console.log(err)
+        alert('error seen when making an order')
+    })
+}
 let editItem = (data) => {
     
     toast.add({ severity: 'success', summary: 'Success Message', detail: 'Item updated', life: 3000 });
@@ -194,6 +255,12 @@ const product = ref({
     company:'',
     shop:'',
     info:''
+})
+const userinfo = ref({
+    phone:'',
+    rider:'',
+    location:'',
+    info:'',
 })
 const types = ref([
     { name: 'Kilograms', code: 'kg' },

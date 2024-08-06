@@ -41,8 +41,7 @@ const store = createStore({
             price:''
         },
         rider:{
-            data:[],
-            response:''
+            name:''
         },
         payments:{
             number:'',
@@ -62,6 +61,7 @@ const store = createStore({
         },
         async login({commit},user){
             const {data} = await axiosClient.post('/login',user)
+            console.log(data)
             commit('loginUser',data)
             return data
         },
@@ -114,10 +114,13 @@ const store = createStore({
             const res = await axiosClient.post('/removeFromCart',id)
             commit('cartItems',res)
         },
-        // async cartTotal({commit}){
-        //     const res = await axiosClient.get('/cartTotal')
-        //     commit('cartTotal',res)
-        // },
+        async order({commit},order){
+            const  res =  await axiosClient.post('/order',order)
+            if(res.data.items.length == 0){
+                commit('clearCart')
+            }
+            return res;
+        },
         async riderRequest({commit}){
             const data = await axiosClient.post('/riderRequest')
             commit('riderResponse',data)
@@ -160,10 +163,7 @@ const store = createStore({
         /**
          * R I D E
          */
-        async rideRequest({commit},data){
-            // let ride = {
-            //     'data' : data
-            // }
+        async rideRequest({commit},data){ 
             const res = await axiosClient.post('/rideRequest',data)
             commit('rideReq',res)
         },
@@ -247,12 +247,15 @@ const store = createStore({
         },
         cartItems:(state,products)=>{
             state.products.products = products.data.items
-            console.log(products.data.items)
+            // console.log(products.data.items)
             let total = 0
             for (let index = 0; index < products.data.items.length; index++) {
                 total += Number(products.data.items[index].total)       
             }
             state.products.total = total
+        },
+        clearCart:(state)=>{
+            state.products.products  = []
         },
         // cartTotal:(state,res)=>{
         //     state.products.total = total
@@ -279,11 +282,11 @@ const store = createStore({
             state.products.mpesaCode = res.data.code
         },
         rideReq:(state,res)=>{
-            state.transport.currentLocation = res.data.details.location
-            state.transport.destination = res.data.details.destination
-            state.transport.pickUpTime = res.data.details.time
-            state.rider.data = res.data.rider
-            state.rider.response = res.data.rider.response
+            // state.transport.currentLocation = res.data.details.location
+            // state.transport.destination = res.data.details.destination
+            // state.transport.pickUpTime = res.data.details.time
+            // state.rider.data = res.data.rider
+            // state.rider.response = res.data.rider.response
         },
         rideConfirmation:(state,res)=>{
             state.transport.confirmed = res.data.ride.confirmed  == 1 ? true : false

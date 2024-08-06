@@ -1,81 +1,44 @@
 <template>
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
     <h2
-      class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+      class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight "
     >Transport</h2>
     <p class="text-center text-sm">..lets get you there</p>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm sm:px-0 px-5">
     <form class="space-y-6" @submit.prevent="rideRequest">
-      <div>
-        <label
-          for="currentLocation"
-          class="block text-sm font-medium leading-6 text-gray-900"
-        >Current Location</label>
-        <div class="mt-2">
-          <input
-            id="currentLocation"
-            name="currentLocation"
-            type="text"
-            required
-            v-model="ride.currentLocation"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <InputText  class="w-full" id="location" v-model="ride.currentLocation" required />
+            <label for="location">Location</label>
+        </FloatLabel>
+      </div>
+
+
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <InputText  id="destination" class="w-full" v-model="ride.destination" required />
+            <label for="destination">Destination</label>
+        </FloatLabel>
+      </div>
+
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <DatePicker id="time" hourFormat="12" v-model="ride.pickupTime" timeOnly fluid required/>
+            <label for="time">PickUp Time</label>
+        </FloatLabel>
       </div>
 
       <div>
-        <div class="flex items-center justify-between">
-          <label
-            for="destination"
-            class="block text-sm font-medium leading-6 text-gray-900"
-          >Destination</label>
-        </div>
-        <div class="mt-2">
-          <input
-            id="destination"
-            name="destination"
-            type="text"
-            autocomplete
-            required
-            v-model="ride.destination"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
+        <FloatLabel>
+            <Select v-model="ride.rider" :options="riders" optionLabel="name" placeholder="type" 
+               class="block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <label for="rider">Rider :</label>
+        </FloatLabel>
       </div>
 
-      <div>
-        <div class="flex items-center justify-between">
-          <label
-            for="pickUpTime"
-            class="block text-sm font-medium leading-6 text-gray-900"
-          >Pick-up time</label>
-        </div>
-        <div class="mt-2">
-          <input
-            id="pickUpTime"
-            name="pickUpTime"
-            type="time"
-            autocomplete
-            required
-            v-model="ride.pickupTime"
-            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-      </div>
-
-      <!-- <div>
-            <div class="flex justify-around">
-                <button class="px-3 py-2 rounded-lg bg-green-500 hover:bg-lime-700">Pick a rider</button>
-                <button class="px-3 py-2 rounded-lg bg-green-800 hover:bg-lime-700">Random rider</button>
-            </div>
-            <select name="rider" id="rider"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                    <option value="martin">Martin</option>
-                    <option value="Juma">Juma</option>
-                    <option value="Ali">Ali</option>
-            </select>
-      </div>-->
 
       <div>
         <button
@@ -87,39 +50,78 @@
         </button>
       </div>
     </form>
-    <div></div>
-    <RideConfirmation
-      v-if="submitted"
-      @confirm="confirm"
-      @decline="decline"
-      @close="close"
-      :transport="transportData"
-      :rider="ridersData"
-    ></RideConfirmation>
+    <Dialog v-model:visible="submitted" modal header="Ride Confirmation" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <div class="border w-full">
+        <div class="text-center  w-fit   mx-auto">
+          <div>Hello</div>
+          <div class="my-3"><span class="font-bold ">Location:</span>{{ ride.currentLocation }}</div>
+          <div class="my-3"><span class="font-bold ">Destination:</span>{{ride.destination}}</div>
+          <div class="my-3"><span class="font-bold ">Pick Up time:</span>{{ timeFormatter(ride.pickupTime) }}</div>
+          <div class="my-3"><span class="font-bold ">Rider:</span>{{ ride.rider['name'] }}</div>
+        </div>
+        <div class="w-3/4 flex justify-around py-5 mx-auto">
+          <Button label="Cancel"severity="danger" @click.prevent="response('cancel')"></Button>
+          <Button label="Request" severity="success" @click.prevent="response('agree')"></Button>
+        </div>
+      </div>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import store from '../../store'
-import RideConfirmation from '../../components/RideConfirmation.vue'
-import {
-  VSkeletonLoader,
-  VProgressCircular,
-} from 'vuetify/lib/components/index.mjs'
+import FloatLabel from 'primevue/floatlabel'
+import InputText from 'primevue/inputtext'
+import DatePicker from 'primevue/datepicker'
+import Select from 'primevue/select'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
 const ride = ref({
   currentLocation: '',
   destination: '',
   pickupTime: '',
+  rider:'',
 })
+const riders = ref([
+    { name: 'Kimi', code: 'NY' },
+    { name: 'Tommy', code: 'RM' },
+    { name: 'Johny', code: 'LDN' },
+    { name: 'Denny', code: 'IST' },
+    { name: 'Jowie', code: 'PRS' }
+]);
 const router = useRouter()
 const transportData = ref(store.state.transport)
 const ridersData = ref(store.state.rider)
 const submitted = ref(false)
 function rideRequest() {
-  store.dispatch('rideRequest', ride.value)
+  // store.dispatch('rideRequest', ride.value)
   submitted.value = true
+}
+function response(data){
+  if(data == 'agree'){
+    ride.value.pickupTime = timeFormatter(ride.value.pickupTime)
+    ride.value.rider = ride.value.rider['name'] 
+    store.dispatch('rideRequest', ride.value)
+    .then(()=>{
+      submitted.value = false
+      ride.value.currentLocation = '',
+      ride.value.destination = '',
+      ride.value.pickupTime = '',
+      ride.value.rider = ''
+     
+    })
+  }else if(data == 'cancel'){
+    submitted.value = false
+  }
+}
+function timeFormatter(date){
+    let  pass_time =  new Date(date)
+    const hours = pass_time.getHours().toString().padStart(2, '0');
+    const minutes = pass_time.getMinutes().toString().padStart(2, '0');
+    const seconds = pass_time.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
 }
 function confirm() {
   store.dispatch('rideConfirmation', true)
