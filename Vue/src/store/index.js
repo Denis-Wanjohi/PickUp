@@ -8,7 +8,6 @@ const store = createStore({
         user:{
             data:{},
             token: sessionStorage.getItem('Auth'),
-            login:'',
             rides:'',
             shopping:'',
             packages:'',
@@ -54,8 +53,8 @@ const store = createStore({
     getters:{},
     actions:{
         async register({commit},user){
-            console.log(user)
             const {data} = await axiosClient.post('/register',user)
+            console.log(data)
             commit('registerUser',data)
             return data
         },
@@ -71,7 +70,7 @@ const store = createStore({
             commit('logoutUser',data)
             return data
         },
-        async userData({commit}){
+        async data({commit}){
             const data = await axiosClient.get('/home')
             commit('userData',data)
         },
@@ -79,8 +78,8 @@ const store = createStore({
          * RIDER registration
          */
         async registerRider({commit},rider){
-            console.log(rider)
             const {data }  = await axiosClient.post('/registerRider',rider)
+            
             return data;
         },
         /**
@@ -195,9 +194,10 @@ const store = createStore({
         /**
          * P A C K A G E
          */
-        async packageRider({commit},data){
-            const res = await axiosClient.post('/packageRider',data)
-            commit('packageRider',res)
+        async delivery({commit},data){
+            const res = await axiosClient.post('/delivery',data)
+            // commit('packageRider',res)
+            return res
         },
         async packageConfirmation({commit},data){
             let  confirmation = {
@@ -300,11 +300,11 @@ const store = createStore({
             state.rider.response = '';
         },
         packageRider:(state,response)=>{
-            state.package.location = response.data.package.location
-            state.package.destination = response.data.package.destination
-            state.package.weight = response.data.package.weight
-            state.package.time = response.data.package.time
-            state.rider.data = response.data.rider
+            // state.package.location = response.data.package.location
+            // state.package.destination = response.data.package.destination
+            // state.package.weight = response.data.package.weight
+            // state.package.time = response.data.package.time
+            // state.rider.data = response.data.rider
         },
         packageConfirmation:(state,response)=>{
             state.package.confirmed = response.data.package.confirmed

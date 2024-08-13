@@ -3,10 +3,7 @@
     <Toast/>
     <div class="sm:w-1/2 w-full  px-5 border border-white m-auto">
             <form  class="border-b  border-gray-900/10 pb-12" @submit.prevent="addToCart">
-                <h2 class=" text-2xl pt-5 font-semibold leading-7 text-gray-900 text-center">SHOPPING</h2>
-                <!-- <p class="mt-1 text-sm leading-6 text-gray-400 text-center">Incase of any inquiry please reach out to us through this form.Thank you  :)</p> -->
-                <!-- <p class="mt-1 text-sm leading-6 text-gray-400 text-center">Please fill in correct details*</p> -->
-
+                <h2 class=" text-2xl pt-5 font-semibold leading-7 text-center">SHOPPING</h2>
 
                 <div v-if="!isFormFilled" class="mt-10  grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 place-items-center">
 
@@ -134,8 +131,7 @@
         </div>
         <Toast />
         <ConfirmPopup></ConfirmPopup>
-        <DataTable :value="cart.products" size="small" tableStyle="min-width: 50rem">
-            <Column field="id" header="ID."></Column>
+        <DataTable :value="cart.products" size="small" tableStyle="min-width: 50rem" class="w-3/4 mx-auto">
             <Column field="product" header="Product"></Column>
             <Column field="quantity" header="Quantity"></Column>
             <Column field="company" header="Company"></Column>
@@ -146,8 +142,8 @@
                     <Button label="Edit" class="mx-2" @click="edit(slotProps)"  severity="success" />
                     <Button @click="confirm2($event,slotProps)" label="Delete" severity="danger" outlined></Button>
                 </template>
-                
             </Column>
+            <template #footer> In total there are {{ cart.products ? cart.products.length : 0 }} products. </template>
         </DataTable>
   
     </div>

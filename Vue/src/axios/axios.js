@@ -1,11 +1,11 @@
 import axios from  "axios"
 import store from '../store'
 const axiosClient = axios.create({
-    baseURL:  'http://127.0.0.1:8000/api'
+    baseURL:  'http://127.0.0.1:8000/api/',
     // baseURL:  'https://pick-up-mocha.vercel.app//api',
-    // headers: {
-    //     'Content-Type': 'application/json',
-    // },
+    headers: {
+        'Content-Type': 'application/json',
+    },
     
 })
 

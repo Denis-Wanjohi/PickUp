@@ -6,46 +6,45 @@
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm sm:px-0 px-5">
-    <form class="space-y-6" @submit.prevent="packageRider">
-      <div>
-        <label for="loaction" class="block text-sm font-medium leading-6 text-gray-900">Current Location</label>
-        <div class="mt-2">
-          <input id="location" name="location" type="text" required="" v-model="Package.location" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-        </div>
+    <form class="space-y-6" @submit.prevent="delivery">
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <InputText  id="currentLocation" class="w-full" v-model="Package.location" required />
+            <label for="currentLocation">Current Location</label>
+        </FloatLabel>
+      </div>
+
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <InputText  id="destination" class="w-full" v-model="Package.destination" required />
+            <label for="destination">Destination</label>
+        </FloatLabel>
       </div>
 
       <div>
-        <div class="flex items-center justify-between">
-          <label for="destination" class="block text-sm font-medium leading-6 text-gray-900">Destination</label>
-        </div>
-        <div class="mt-2">
-          <input id="destination" name="destination" type="text" autocomplete=""  required="" v-model="Package.destination" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-        </div>
+        <FloatLabel>
+            <Select v-model="Package.rider" :options="riders" optionLabel="name" placeholder="type" 
+               class="block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <label for="rider">Rider :</label>
+        </FloatLabel>
+      </div>
+
+      <div class="my-10 mx-auto">
+        <FloatLabel>
+            <DatePicker id="time" hourFormat="12" v-model="Package.time" timeOnly fluid required/>
+            <label for="time">PickUp Time</label>
+        </FloatLabel>
       </div>
 
       <div>
-        <div class="flex items-center justify-between">
-          <label for="weight" class="block text-sm font-medium leading-6 text-gray-900">Weight</label>
-        </div>
-        <div class="mt-2">
-          <!-- <input id="pickUpTime" name="pickUpTime" type="time" autocomplete=""  required="" v-model="ride.time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" /> -->
-            <select name="weight" id="weight" v-model="Package.weight" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="50>">less or equal to 50kg</option>
-                <option value="50<">more than 50kg</option>
-            </select>
-        </div>
+        <FloatLabel>
+            <Select v-model="Package.weight" :options="weight" optionLabel="name" placeholder="type" 
+               class="block w-full rounded-md border-1 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+            <label for="rider">Weight :</label>
+        </FloatLabel>
       </div>
-
-      <div>
-        <div class="flex items-center justify-between">
-          <label for="pickUpTime" class="block text-sm font-medium leading-6 text-gray-900">Pick-up time</label>
-        </div>
-        <div class="mt-2">
-          <input id="pickUpTime" name="pickUpTime" type="time" autocomplete=""  required="" v-model="Package.time" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-        </div>
-      </div>
-
-
 
       <div>
         <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -54,42 +53,90 @@
         </button>
       </div>
     </form>
- 
-    <!-- <RideConfirmation v-if="submitted" @confirm="confirm" @decline="decline" @close="close" :transport="transportData" :rider="ridersData"></RideConfirmation> -->
   </div>
+  <Dialog v-model:visible="submitted" modal header="Delivery details" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+      <div class="border w-full">
+        <div class="text-center  w-fit   mx-auto">
+          <div>Hello</div>
+          <div class="my-3"><span class="font-bold ">Location: </span>{{ Package.location }}</div>
+          <div class="my-3"><span class="font-bold ">Destination: </span>{{Package.destination}}</div>
+          <div class="my-3"><span class="font-bold ">Pick Up time: </span>{{ timeFormatter(Package.time) }}</div>
+          <div class="my-3"><span class="font-bold ">Rider: </span>{{ Package.rider['name'] }}</div>
+          <div class="my-3"><span class="font-bold ">Weight: </span>{{ Package.weight['name'] }}</div>
+        </div>
+        <div class="w-3/4 flex justify-around py-5 mx-auto">
+          <Button label="Cancel"severity="danger" @click.prevent="response('cancel')"></Button>
+          <Button label="Request" severity="success" @click.prevent="response('agree')"></Button>
+        </div>
+      </div>
+    </Dialog>
 </template>
 
 <script setup>
 import {ref} from 'vue'
 import store from '../../store';
+import FloatLabel from 'primevue/floatlabel'
+import InputText from 'primevue/inputtext'
+import DatePicker from 'primevue/datepicker'
+import Select from 'primevue/select'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
 import Payments from './DeliveryCheckout.vue'
 import DeliveryConfirmation from '../../components/DeliveryConfirmation.vue'
 const rider = store.state.rider
 const pack = store.state.package
+const submitted = ref(false)
+
 const Package = ref({
     location:'',
     destination:'',
     weight:'',
     time:'',    
+    rider:'',    
 })
+const riders = ref([
+    { name: 'Kimi', code: 'NY' },
+    { name: 'Tommy', code: 'RM' },
+    { name: 'Johny', code: 'LDN' },
+    { name: 'Denny', code: 'IST' },
+    { name: 'Jowie', code: 'PRS' }
+]);
+const weight = ref([
+    { name: 'More than 50  kg', code: '>50' },
+    { name: 'Less than 50 kg', code: '<50' },
+]);
 const requestRider = ref(false)
-function packageRider(){
-    store.dispatch('packageRider',Package.value)
-    .then(()=>{
-      requestRider.value = true
-    })
-    .catch((er)=>{
-      alert(er)
-    })
+function delivery(){
+  submitted.value = true
 }
-function confirm(){
-  store.dispatch('packageConfirmation',1)
-  .then(()=>{
-    requestRider.value = false
-  })
-  .catch((err)=>{
-    alert(err)
-  })
+function response(data){
+  if(data == 'agree'){
+    Package.value.pickupTime = timeFormatter(Package.value.time)
+    Package.value.rider = Package.value.rider['name']
+    Package.value.weight = Package.value.weight['code']
+    store.dispatch('delivery',Package.value)
+    .then(()=>{
+      submitted.value = false
+      Package.value.location = '',
+      Package.value.destination = '',
+      Package.value.weight = '',
+      Package.value.time = '',
+      Package.value.rider = ''
+    })
+    .catch((err)=>{
+      console.log(err)
+      alert('error seen at delivery request')
+    })
+  }else if(data == 'camcel'){
+    submitted.value = false
+  }
+}
+function timeFormatter(date){
+    let  pass_time =  new Date(date)
+    const hours = pass_time.getHours().toString().padStart(2, '0');
+    const minutes = pass_time.getMinutes().toString().padStart(2, '0');
+    const seconds = pass_time.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
 }
 function decline(){
   store.dispatch('packageConfirmation',0)

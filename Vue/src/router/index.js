@@ -59,14 +59,16 @@ const router  = createRouter({
     history: createWebHistory(),
     routes
 })
-// router.beforeEach((to,from,next)=>{
-//     // store.state.paths.destinations.push(to.name)
-//     if(to.meta.requireAuth  && store.state.user.token === null){
-//         next({name:'Login'})
-//     }else if(to.path == '/login' || to.path == '/register' || to.path == '/' && store.state.user.token !== null ){
-//         next({name:'Dashboard'})
-//     }else{
-//         next()
-//     }
-// })
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requireAuth && !sessionStorage.getItem('Auth')) {
+      next({ path: '/login' })
+    } else if ((to.path === '/login' || to.path === '/register') && sessionStorage.getItem('Auth')) {
+      next({ path: '/dashboard' })
+    } else if (to.path === '/' && sessionStorage.getItem('Auth')) {
+      next({ path: '/dashboard' })
+    } else {
+      next()
+    }
+  })
 export default router

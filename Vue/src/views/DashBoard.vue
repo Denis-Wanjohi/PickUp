@@ -3,8 +3,7 @@
     <!-- <Admin></Admin> -->
 <!-- RIDER -->
     <!-- <Rider></Rider> -->
-<!-- DELIVERY -->
- {{ store.state.user.data }}
+<!-- CLIENT -->
     <Client></Client>
 
 </template>
@@ -15,7 +14,8 @@ import store from '../store'
 import Admin from './Dashboard/AdminDashboard.vue'
 import Rider from './Dashboard/RiderDashboard.vue'
 import Client from './Dashboard/ClientDashboard.vue'
-store.dispatch('userData')
+store.dispatch('data')
+const user = ref(store.state.user )
 let str = ref(store.state.user)
 let display =  ref()
 let x = 0;

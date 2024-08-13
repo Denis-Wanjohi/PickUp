@@ -9,7 +9,7 @@
                         {{ value.name }}
                     </div>   
                     <div class="text-2xl">
-                        <Knob v-model="tally" readonly></Knob>
+                        <Knob v-model=value.value readonly></Knob>
                     </div>                 
                 </div>
             </template>
@@ -37,21 +37,37 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref,watch} from 'vue'
 import PackageDeliveryIconVue from "../../components/Icons/PackageDeliveryIcon.vue"
 import RideIconVue from "../../components/Icons/RideIcon.vue"
 import ShoppingIconVue from "../../components/Icons/ShoppingIcon.vue"
-import RecentActivities from "./RecentActivities_Admin.vue"
-import DataActivities from "./DataActivities_Admin.vue"
 import RideData from "./Rides_Client/RideData_Client.vue"
 import DeliveryData from "./Delivery_Client/DeliveryData_Client.vue"
 import ShoppingData from "./Shopping_Client/ShoppingData_Client.vue"
-import Splitter from 'primevue/splitter';
-import SplitterPanel from 'primevue/splitterpanel';
 import Card from 'primevue/card';
 import Knob from 'primevue/knob';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
+import store from '../../store/index'
+const user = ref(store.state.user)
+const service = ref()
+watch(store=>{
+    service.value = [
+    {
+        name:'Ride',
+        value:user.value.rides.length,
+        icon:RideIconVue
+    },
+    {
+        name:'Shopping',
+        value:user.value.shopping.length,
+        icon:ShoppingIconVue
+    },
+    {
+        name:'Delivery',
+        value:user.value.packages.length,
+        icon:PackageDeliveryIconVue
+    },
+]
+})
 const tally = ref(0)
 let x = 20
 setTimeout(()=>{
@@ -59,24 +75,7 @@ setTimeout(()=>{
         tally.value++
     }
 },2000)
-const service = [
-    {
-        name:'Ride',
-        value:2,
-        icon:RideIconVue
-    },
-    {
-        name:'Shopping',
-        value:30,
-        icon:ShoppingIconVue
-    },
-    {
-        name:'Delivery',
-        value:24,
-        icon:PackageDeliveryIconVue
-    },
 
-]
 const users = [
     {
         name:'Clients',
