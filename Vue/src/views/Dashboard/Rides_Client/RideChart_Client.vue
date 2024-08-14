@@ -20,8 +20,8 @@ const x_values = ref()
 // alert(data.value)
 
 onMounted(() => {
-   data.value = [12, 51, 62, 33, 21, 62, 45,22,23,45,47,5] 
-   x_values.value = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December']
+    data.value = [5,8,5,3,6,8,10]
+    x_values.value = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
    chartData.value = setChartData();
    chartOptions.value = setChartOptions();
 });

@@ -1,6 +1,5 @@
 
 <template>
-    {{ data }}
     <div class="card">
         <div class="text-center text-xl font-bold">Rides history(Client)</div>
         <DataTable stripedRows scrollable  v-model:filters="filters" :value="customers" paginator showGridlines :rows="10" dataKey="id"
@@ -91,8 +90,6 @@ import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';   // optional
-import Row from 'primevue/row';                   // optional
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputNumber from 'primevue/inputnumber';
@@ -100,49 +97,46 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import DatePicker from 'primevue/datepicker';
 import store from '../../../store/index'
-const data = ref(store.state.user.rides[0])
+const data = ref([])
+const rides = ref(store.state.user.rides)
 const customersData = ref([])
-watch(data=>{
-    store.state.user.rides.forEach(element => {
-        customersData.value.push(element)
-    });
-    getCustomersMedium()
-})
-
 const customers = ref();
 const filters = ref();
-
-
 const statuses = ref(['unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal']);
 const loading = ref(true);
 
+// watch(rides=>{
+//     data.value = []
+//     if(store.state.user.rides.length != 0){
+
+//         store.state.user.rides.forEach((el)=>{
+//             el.created_at = dateFormatter(el.created_at)
+//             customersData.value.push(el)
+//             getData()
+//         })
+//     }
+// })
+watch(rides=>{
+    customersData.value  = []
+    if(store.state.user.rides.length != 0){
+        store.state.user.rides.forEach((el)=>{
+            el.date = dateFormatter(el.created_at)
+            customersData.value.push(el)
+        })
+        getData()
+    }
+})
+function dateFormatter(date){
+    let pass_date  =  new Date(date)
+    let month = pass_date.getMonth().length != 1 ? "0"+pass_date.getMonth() : pass_date.getMonth()
+    let day = pass_date.getDay().length != 1 ? "0"+pass_date.getDay() : pass_date.getDay()
+    return pass_date.getFullYear() + "-" + month+ "-" + day
+}
+
+
 const CustomerService = {
     getCustomersMedium() {
-     customersData.value = [
-        {
-            id: 1000,
-            rider: 'Jamess But',
-            location:'Town',
-            destination:'Makutano',
-            // payment:110,
-            date: '2024-09-13',
-            time:'1200h',
-                   
-        },
-        {
-            id: 1001,
-            rider: 'John Doe',
-            location: 'City',
-            destination: 'Suburbs',
-            // payment:100,
-            date: '2024-09-14',
-            time: '1300h',
-            activity: 45
-        },
-       
-
-        ];
-
+     customersData.value = store.state.user.rides
         return new Promise((resolve) => {
             setTimeout(() => resolve(customersData), 1000);
         });
@@ -150,11 +144,15 @@ const CustomerService = {
 };
 
 onMounted(() => {
-    CustomerService.getCustomersMedium().then((data) => {
-        customers.value = getCustomers(data);
-        loading.value = false;
-    });
+    getData()
 });
+
+function getData(){
+        CustomerService.getCustomersMedium().then((data) => {
+            customers.value = getCustomers(data.value);
+            loading.value = false;
+        });
+}
 
 
 const initFilters = () => {
