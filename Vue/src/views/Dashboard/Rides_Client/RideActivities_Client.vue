@@ -129,7 +129,7 @@ watch(rides=>{
 function dateFormatter(date){
     let pass_date  =  new Date(date)
     let month = pass_date.getMonth().length != 1 ? "0"+pass_date.getMonth() : pass_date.getMonth()
-    let day = pass_date.getDay().length != 1 ? "0"+pass_date.getDay() : pass_date.getDay()
+    let day = pass_date.getDate().toString().length == 1 ? "0"+pass_date.getDate() : pass_date.getDate()
     return pass_date.getFullYear() + "-" + month+ "-" + day
 }
 

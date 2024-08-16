@@ -46,7 +46,7 @@ import TopNav from './HomePage/TopNav.vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button';
 const router  = useRouter()
-const error = ref()
+const error = ref([])
 const user = {
     name: '',
     email:'',
@@ -63,8 +63,14 @@ function register(){
             })
         })
         .catch((err)=>{
-            console.log("err")
-            error.value = err.response.data.errors
+            console.log(typeof(error.value))
+            console.log(err.response.data.error)
+            err.response.data.forEach(element => {
+                error.value.push(element)
+                console.log(el)
+            });
+            console.log(error.value)
+            // error.value = err.response.data.errors
         })
 }
 function closeError(ev){
