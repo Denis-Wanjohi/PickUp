@@ -51,17 +51,6 @@
                 </template>
             </Column>
 
-            <!-- <Column header="Pay" filterField="payment" :showFilterMatchModes="true" :filterMenuStyle="{ width: '14rem' }" style="min-width: 12rem">
-                <template #body="{ data }">
-                    <div class="flex items-center gap-2">
-                        <span>Ksh.{{ data.payment }}</span>
-                    </div>
-                </template>
-                <template #filter="{ filterModel }">
-                    <InputText v-model="filterModel.value" type="text" placeholder="search payment" />
-                </template>
-            </Column> -->
-
             <Column header="Date" filterField="date" dataType="date" style="min-width: 10rem">
                 <template #body="{ data }">
                     {{ formatDate(data.date) }}
@@ -175,9 +164,7 @@ const formatDate = (value) => {
         year: 'numeric'
     });
 };
-const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
+
 const clearFilter = () => {
     initFilters();
 };
@@ -187,24 +174,6 @@ const getCustomers = (data) => {
 
         return d;
     });
-};
-const getSeverity = (status) => {
-    switch (status) {
-        case 'unqualified':
-            return 'danger';
-
-        case 'qualified':
-            return 'success';
-
-        case 'new':
-            return 'info';
-
-        case 'negotiation':
-            return 'warn';
-
-        case 'renewal':
-            return null;
-    }
 };
 </script>
 

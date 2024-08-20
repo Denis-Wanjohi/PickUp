@@ -1,10 +1,8 @@
 
 <template>
-    {{ data}} 
    <div class="card h-[90%] p-3" >
       <div class="w-full  flex justify-end">
          <div class="my-auto font-bold">Number of Rides(client)</div>
-
          <Button label="Week" class="mx-2" @click="selectedTime('week')"></Button>
          <Button label="Month" class="mx-2" @click="selectedTime('month')"></Button>
          <Button label="Year" class="mx-2"  @click="selectedTime('year')"></Button>
@@ -44,7 +42,6 @@ watch(()=>store.state.user.rides,(newValue)=>{
              arr_months_count.value.push(count)
              count = 0
          }
-
      }
 })
 
@@ -62,11 +59,12 @@ onMounted(() => {
 
 function selectedTime(time){
    if(time == 'week'){
+    console.log(arr_months.value)
       data.value = [2,8,5,3,6,8,10]
       x_values.value = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
    }else if(time == 'month'){
-      data.value = [12,30,24,19]
-      x_values.value = ['Week  1','Week 2','Week 3', 'Week 4']
+      data.value = [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9,1,2,3,4]
+      x_values.value = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
    }else if(time = 'year'){
       data.value = arr_months_count.value
       x_values.value = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August','September','October','November','December']
@@ -135,10 +133,7 @@ function chart_dates(date){
 }
 function dateFormatter(date){
     let pass_date  =  new Date(date)
-    // chart_dates(pass_date.getDate())
-    // arr_dates.value.push(pass_date.getDate())
     let month = pass_date.getMonth().length != 1 ? "0"+pass_date.getMonth() : pass_date.getMonth()
-    // console.log((pass_date.getDate().toString().length))
     let day = pass_date.getDate().toString().length == 1 ? "0"+pass_date.getDate() : pass_date.getDate()
     return pass_date.getFullYear() + "-" + month+ "-" + day
 }
