@@ -2,7 +2,7 @@
 <template>
     <div class="card h-[90%] p-3" >
        <div class="w-full  flex justify-end">
-          <div class="my-auto font-bold">Number of Deliveries(client)</div>
+          <div class="my-auto font-bold">Number of Rides</div>
           <Button label="Week" class="mx-2" @click="selectedTime('week')"></Button>
           <Button label="Month" class="mx-2" @click="selectedTime('month')"></Button>
           <Button label="Year" class="mx-2"  @click="selectedTime('year')"></Button>
@@ -18,12 +18,12 @@
  import store from '../../../store/index'
  const data = ref([]) 
  const x_values = ref() 
- const dates  = ref(store.state.user.packages)
+ const dates  = ref(store.state.user.rides)
  const arr_dates = ref([])
  const arr_months = ref([])
  const arr_months_count = ref([])
  
- watch(()=>store.state.user.packages,(newValue)=>{
+ watch(()=>store.state.user.rides,(newValue)=>{
      arr_months.value = []
      data.value = []
      arr_months_count.value = []
@@ -132,12 +132,12 @@
      console.log(arr_dates.value)
  }
  function dateFormatter(date){
-    let pass_date  =  new Date(date)
-    let month = (Number(pass_date.getMonth()) + 1).toString()
-    month = month.length == 1 ? "0"+month : month
-    let day = pass_date.getDate().toString().length == 1 ? "0"+pass_date.getDate() : pass_date.getDate()
-    return pass_date.getFullYear() + "-" + month   + "-" + day
-}
+     let pass_date  =  new Date(date)
+     let month = (Number(pass_date.getMonth()) + 1).toString()
+     month = month.length == 1 ? "0"+month : month
+     let day = pass_date.getDate().toString().length == 1 ? "0"+pass_date.getDate() : pass_date.getDate()
+     return pass_date.getFullYear() + "-" + month   + "-" + day
+ }
  </script>
  
  

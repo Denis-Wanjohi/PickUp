@@ -158,9 +158,10 @@ function getData(){
 }
 function dateFormatter(date){
     let pass_date  =  new Date(date)
-    let month = pass_date.getMonth().length != 1 ? "0"+pass_date.getMonth() : pass_date.getMonth()
+    let month = (Number(pass_date.getMonth()) + 1).toString()
+    month = month.length == 1 ? "0"+month : month
     let day = pass_date.getDate().toString().length == 1 ? "0"+pass_date.getDate() : pass_date.getDate()
-    return pass_date.getFullYear() + "-" + month+ "-" + day
+    return pass_date.getFullYear() + "-" + month   + "-" + day
 }
 function timeFormatter(date){
     let pass_date  =  new Date(date)

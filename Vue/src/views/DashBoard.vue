@@ -1,10 +1,10 @@
 <template>
 <!-- ADMIN -->
-    <!-- <Admin></Admin> -->
+    <Admin></Admin>
 <!-- RIDER -->
     <!-- <Rider></Rider> -->
 <!-- CLIENT -->
-    <Client></Client>
+    <!-- <Client></Client> -->
 
 </template>
 

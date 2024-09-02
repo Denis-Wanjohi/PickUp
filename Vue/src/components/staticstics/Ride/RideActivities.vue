@@ -1,7 +1,7 @@
 
 <template>
     <div class="card">
-        <div class="text-center text-xl font-bold">Rides history(Client)</div>
+        <div class="text-center text-xl font-bold">Rides history</div>
         <DataTable stripedRows scrollable  v-model:filters="filters" :value="customers" paginator showGridlines :rows="10" dataKey="id"
                 filterDisplay="menu" :loading="loading" :globalFilterFields="['rider', 'location','destination','date','time']">
             <template #header>

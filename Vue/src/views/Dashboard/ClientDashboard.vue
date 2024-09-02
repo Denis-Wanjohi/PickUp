@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref,watch} from 'vue'
+import { ref,watch} from 'vue'
 import PackageDeliveryIconVue from "../../components/Icons/PackageDeliveryIcon.vue"
 import RideIconVue from "../../components/Icons/RideIcon.vue"
 import ShoppingIconVue from "../../components/Icons/ShoppingIcon.vue"
@@ -76,14 +76,4 @@ setTimeout(()=>{
     }
 },2000)
 
-const users = [
-    {
-        name:'Clients',
-        value:24
-    },
-    {
-        name:'Riders',
-        value:24
-    },
-]
 </script>

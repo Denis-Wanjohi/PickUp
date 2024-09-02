@@ -9,7 +9,7 @@
                         {{ value.name }}
                     </div>   
                     <div class="text-2xl">
-                        <Knob v-model="tally" readonly ></Knob>
+                        <Knob v-model=value.value readonly ></Knob>
                     </div>                 
                 </div>
             </template>
@@ -37,48 +37,35 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref,watch} from 'vue'
 import PackageDeliveryIconVue from "../../components/Icons/PackageDeliveryIcon.vue"
 import RideIconVue from "../../components/Icons/RideIcon.vue"
 import ShoppingIconVue from "../../components/Icons/ShoppingIcon.vue"
-import RecentActivities from "./RecentActivities_Admin.vue"
-import DataActivities from "./DataActivities_Admin.vue"
 import RideData from "./Rides_Rider/RideData_Rider.vue"
 import DeliveryData from "./Delivery_Rider/DeliveryData_Rider.vue"
 import ShoppingData from "./Shopping_Rider/ShoppingData_Rider.vue"
-import Splitter from 'primevue/splitter';
-import SplitterPanel from 'primevue/splitterpanel';
 import Card from 'primevue/card';
 import Knob from 'primevue/knob';
-import AccordionHeader from 'primevue/accordionheader';
-import AccordionContent from 'primevue/accordioncontent';
-const tally = ref(300)
-const service = [
+import store from '../../store/index'
+const user = ref(store.state.user)
+const service = ref()
+watch(store=>{
+    service.value = [
     {
         name:'Ride',
-        value:2,
+        value:user.value.rides.length,
         icon:RideIconVue
     },
     {
         name:'Shopping',
-        value:30,
+        value:user.value.shopping.length,
         icon:ShoppingIconVue
     },
     {
         name:'Delivery',
-        value:24,
+        value:user.value.packages.length,
         icon:PackageDeliveryIconVue
     },
-
 ]
-const users = [
-    {
-        name:'Clients',
-        value:24
-    },
-    {
-        name:'Riders',
-        value:24
-    },
-]
+})
 </script>

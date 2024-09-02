@@ -51,7 +51,7 @@
                     <!-- AGE -->
                     <div class="sm:col-span-3">
                     <FloatLabel>
-                        <InputText id="age" required v-model="rider.age" />
+                        <InputText id="number" required v-model="rider.age" />
                         <label for="age">Age</label>
                     </FloatLabel>
                     </div>

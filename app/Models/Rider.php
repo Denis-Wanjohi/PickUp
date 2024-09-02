@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Rider extends Model
 {
     use HasFactory;
-    protected $fillable = ['firstname','lastname','username','email','age','bike','station','phone'];
+    protected $fillable = ['firstname','lastname','username','email','age','bike','station','phone','admin_id'];
 }

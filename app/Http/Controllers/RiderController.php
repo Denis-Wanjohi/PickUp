@@ -19,6 +19,7 @@ class RiderController extends Controller
             'station' => 'required|string',
             'phone' => 'required',
         ]);
+        $rider['admin_id'] = auth()->user()->id;
         Rider::create($rider);
         return response([
             'data'=> 'success'
