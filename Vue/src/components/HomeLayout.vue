@@ -55,7 +55,6 @@ import store from '../store'
 import route from  '../router'
 import Menu from './Menu.vue'
 const menuView = ref(false)
-
 function viewMenu(){
     menuView.value = !menuView.value
 }

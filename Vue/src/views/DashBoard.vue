@@ -1,11 +1,11 @@
 <template>
 <!-- ADMIN -->
-    <Admin></Admin>
+    <!-- <Admin></Admin> -->
 <!-- RIDER -->
     <!-- <Rider></Rider> -->
 <!-- CLIENT -->
     <!-- <Client></Client> -->
-
+<p>home page</p>
 </template>
 
 <script setup>
@@ -15,6 +15,14 @@ import Admin from './Dashboard/AdminDashboard.vue'
 import Rider from './Dashboard/RiderDashboard.vue'
 import Client from './Dashboard/ClientDashboard.vue'
 store.dispatch('data')
+ async function getUser(){
+    await  fetch('http://localhost:8080/api/user',{method:'GET'}).then((res)=>{
+        console.log(res)
+    }).catch((er)=>{
+        console.error(er)
+    })
+ }
+ getUser()
 const user = ref(store.state.user )
 let str = ref(store.state.user)
 let display =  ref()

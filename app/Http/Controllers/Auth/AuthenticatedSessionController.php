@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = $validator->validated();
         if(!Auth::attempt($user)){
-            return response('sorry');
+            return response('invalid credentials');
         }
 
         $user = Auth::user();
@@ -45,7 +45,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): Response
     {
-        Auth::guard('api')->logout();
+        // Auth::guard('api')->logout();
 
         $request->session()->invalidate();
 

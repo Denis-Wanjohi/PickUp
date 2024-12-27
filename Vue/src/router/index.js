@@ -1,17 +1,20 @@
 
-import { createRouter,createWebHistory } from 'vue-router';
+
 import store from '../store';
 import DashBoard from '../views/HomePage.vue'
 import Shopping from '../views/Dashboard/Shopping.vue'
 import ShoppingCheckout from '../views/Dashboard/ShoppingCheckout.vue'
 import Transport from '../views/Dashboard/Transport.vue'
 import PackageDelivery from '../views/Dashboard/PackageDelivery.vue'
-import Home from '../views/Dashboard.vue'
+// import Home from '../views/Dashboard.vue'
+// import Dashboard from '../views/Dashboard.vue';
+import test from '../views/test.vue';
+import test2 from '../views/test2.vue';
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import HomeLayout from '../components/HomeLayout.vue';
 import RiderRegistration from '../views/Admin/RiderRegistrationView.vue'
-
+import { createRouter,createWebHistory } from 'vue-router';
 const routes = [ 
     {
         path:'/',
@@ -26,7 +29,7 @@ const routes = [
         meta:{requireAuth:true},
         component:HomeLayout,
         children:[
-            {  path:'/dashboard',name:'HomePage',component:Home , meta:{requireAuth:true},},
+            {  path:'/dashboard',name:'HomePage',component:test2 , meta:{requireAuth:true},},
             {  path:'/shopping',name:'Shopping',component:Shopping , meta:{requireAuth:true},},
             {  path:'/checkout',name:'Checkout',component:ShoppingCheckout , meta:{requireAuth:true},},
             {  path:'/transport',name:'Transport',component:Transport, meta:{requireAuth:true},},

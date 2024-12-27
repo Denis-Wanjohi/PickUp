@@ -13,7 +13,7 @@
                             </svg>
                         </div>
                         <div class="w-3/4 border-0">
-                            <Card >
+                            <Card>
                                 <template #title>{{item.title}}</template>
                                 <template #content>
                                     <p class="m-0">{{item.description}}</p>
@@ -76,7 +76,7 @@ const items = [
         icon:PackageDeliveryIconVue,
         title:'Delivery',
         description:'We also deliver',
-        link:'/delivery',
+        link:'/packageDelivery',
     },
     {
         icon:RideIconVue,
@@ -101,9 +101,11 @@ function nextPage(item){
             })
     }else if(item.link == '/addRider'){
         router.push('/addRider')
-    }else if(item.link == '/shopping' || item.link == '/delivery' || item.link == '/transport'){
+    }else if(item.link == '/shopping' || item.link == '/packageDelivery' || item.link == '/transport'){
         router.push(item.link)
+        visible.value = false
     }
     
 }
+
 </script>

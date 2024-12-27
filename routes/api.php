@@ -8,7 +8,9 @@ use App\Http\Controllers\RiderController;
 use App\Http\Controllers\PackagesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::middleware('auth:sanctum')->group(function(){
@@ -16,6 +18,13 @@ Route::middleware('auth:sanctum')->group(function(){
        return $request->user();
    });
    Route::get('/home',[HomeController::class,'index']);
+   Route::post('/logout',function(Request $request){
+    // $request->session()->invalidate();
+
+    // $request->session(9)->regenerateToken();
+    $user = Auth::user();
+    return  0;
+   });
    // SHOPPING
    Route::get('/cartItems',[ProductsController::class,'cartItems']);
    Route::post('/addToCart',[ProductsController::class,'addCart']);
@@ -51,6 +60,6 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware('guest')
                 ->name('login');
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->middleware('auth')
-                ->name('logout');
+// Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+//                 ->middleware('auth')
+//                 ->name('logout');

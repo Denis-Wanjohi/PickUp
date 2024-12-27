@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('riders', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class,'id');
+            $table->foreignIdFor(User::class,'user_id');
             $table->string('firstname');
             $table->string('lastname');
             $table->string('username');

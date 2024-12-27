@@ -11,10 +11,10 @@
 
       <div>
           <label for="email1" class="block text-900 font-medium mb-2">Email</label>
-          <InputText id="email1" type="text" v-model="user.email" placeholder="Email address" class="w-full mb-3" />
-
+          <InputText id="email1" type="email" v-model="user.email" placeholder="email@gmail.com" required class="w-full mb-3" />
+            <p class="text-center text-red-600 text-sm font-sans">{{ login_error }}</p>
           <label for="password" class="block text-900 font-medium mb-2">Password</label>
-          <InputText id="password" type="password" v-model="user.password" placeholder="Password" class="w-full mb-3" />
+          <InputText id="password" type="password" v-model="user.password" placeholder="password" required class="w-full mb-3" />
 
           <div class="flex align-items-center justify-content-between mb-6">
               <!-- <div class="flex align-items-center">
@@ -23,8 +23,10 @@
               </div> -->
               <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
           </div>
-          <div  class="text-red text-sm">{{ login_error }}</div>
-          <Button label="Sign In" icon="pi pi-user" class="w-full" type="submit"></Button>
+          <Button v-if="!submitted" label="Sign In" icon="pi pi-user" class="w-full" type="submit"></Button>
+          <div v-else class="w-full rounded-lg py-1 flex justify-center" style="background-color: #10b981;">
+            <VProgressCircular color="white" indeterminate />
+          </div>
       </div>
     </div>
   </form>
@@ -42,7 +44,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 // import InputText from 'primevue/inputtext'
 const router  = useRouter()
-
+const submitted = ref(false)
 const user = {
     email:'',
     password:''
@@ -52,24 +54,34 @@ const login_error = ref()
 const errorTimer = ref()
 
 function userLogin(){
+    console.log(user)
+    submitted.value = true
     login.value = true
     store.dispatch('login',user)
         .then((data)=>{
-
-            // console.log( store.state.destinations.names )
-            // if( store.state.destinations.names[0] !== 'Login'){
-                // router.push({name:store.state.destinations.names[0]} )
-            // }else{
+            console.log(data)
+            if(data == 'invalid credentials'){
+                user.email = ''
+                user.password = ''
+                submitted.value = false
+                login_error.value = "Credentials doesn't match our records"
+                setTimeout(()=>{
+                    login_error.value = null
+                },5000)
+            }
+            if(data == 'pass'){
                 router.push({name:'Dashboard'})
-            // }
+            }
         })
         .catch((err)=>{
             console.log("error seen")
+            console.log(err)
             setTimeout(()=>{
                 login_error.value = ''
             },5000)
             login.value = false
-            login_error.value = err.response.data.error
+            submitted.value = false
+            // login_error.value = err.response.data.error
         })
 }
 function closeError(ev){

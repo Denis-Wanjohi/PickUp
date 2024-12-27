@@ -60,13 +60,18 @@ const store = createStore({
         },
         async login({commit},user){
             const {data} = await axiosClient.post('/login',user)
-            console.log(data)
-            commit('loginUser',data)
-            return data
+            if(data == 'invalid credentials'){
+                return data;
+            }else{
+                commit('loginUser',data)
+                return 'pass'
+            }
+            
         },
         async logout({commit},user){
             console.log("logging out")
-            const {data} = await axiosClient.post('/logout',user)
+            const {data} = await axiosClient.post('/logout',store.state.user.token)
+            // return data
             commit('logoutUser',data)
             return data
         },
@@ -231,8 +236,8 @@ const store = createStore({
         },
         loginUser:(state,data)=>{
             sessionStorage.setItem('Auth',data.token)
-            
             state.user.token = sessionStorage.getItem('Auth')
+            state.user.data = data.token
         },
         logoutUser:(state,data)=>{
             console.log("data token " + data.token)
