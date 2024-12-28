@@ -3,6 +3,7 @@
         <div class="w-3/4 flex justify-center place-items-center font-bold text-3xl" style=" font-family: comic sans ms">
             <router-link :to="{name:'Dashboard'}">KiriRide</router-link>
         </div>
+        <!-- {{store.state.user.data}} -->
         <div class="w-fit sm:flex px-5 justify-around place-items-center space-x-10 sm:block hidden">
             <div>
                 <a href="shopping" class="bg-blue-500  text-white py-2 px-2 rounded-lg hover:bg-blue-800 cursor-pointer hover:text-black">Shopping</a>

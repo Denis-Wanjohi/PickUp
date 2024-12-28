@@ -6,7 +6,7 @@ const store = createStore({
             destinations:[]
         },
         user:{
-            data:{},
+            data:null,
             token: sessionStorage.getItem('Auth'),
             rides:'',
             shopping:'',
