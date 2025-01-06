@@ -18,7 +18,4 @@ import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import RideActivities from './RideActivities_Admin.vue';
 import RideChart from './RideChart_Admin.vue';
-
-
-
 </script>

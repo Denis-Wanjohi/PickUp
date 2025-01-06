@@ -1,5 +1,6 @@
 
 <template>
+    <!-- {{ customersD }} -->
     <div class="card">
         <div class="text-center text-xl font-bold">Rides history</div>
         <DataTable stripedRows  v-model:filters="filters" :value="customers" paginator showGridlines :rows="10" dataKey="id"
@@ -72,6 +73,7 @@
 
             <Column header="Date" filterField="date" dataType="date" style="min-width: 10rem">
                 <template #body="{ data }">
+                    <!-- {{ data.date }} -->
                     {{ formatDate(data.date) }}
                 </template>
                 <template #filter="{ filterModel }">
@@ -92,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 // import { CustomerService } from '@/service/CustomerService';
 import { FilterMatchMode, FilterOperator } from '@primevue/core/api';
 
@@ -111,167 +113,36 @@ import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import DatePicker from 'primevue/datepicker';
+import store from '../../../store';
 
 
 const customers = ref();
+const customersD = ref();
 const filters = ref();
 const loading = ref(true);
-
 const CustomerService = {
     getCustomersMedium() {
-        const customersData = [
-        {
-            id: 1000,
-            name: 'Jamess But',
-            rider:'Kim Kimani',
-            location:'Town',
-            destination:'Makutano',
-            date: '2024-09-13',
-            time:'1200h',
-                   
-        },
-        {
-            id: 1001,
-            name: 'John Doe',
-            rider: 'Jane Smith',
-            location: 'City',
-            destination: 'Suburbs',
-            date: '2024-09-14',
-            time: '1300h',
-            activity: 45
-            },
-            {
-            id: 1002,
-            name: 'Jane Smith',
-            rider: 'John Doe',
-            location: 'Suburbs',
-            destination: 'City',
-            date: '2024-09-15',
-            time: '1400h',
-            activity: 56
-            },
-            {
-            id: 1003,
-            name: 'Bob Johnson',
-            rider: 'Alice Brown',
-            location: 'Town',
-            destination: 'Village',
-            date: '2024-09-16',
-            time: '1500h',
-            activity: 67
-            },
-            {
-            id: 1004,
-            name: 'Alice Brown',
-            rider: 'Bob Johnson',
-            location: 'Village',
-            destination: 'Town',
-            date: '2024-09-17',
-            time: '1600h',
-            activity: 78
-            },
-            {
-            id: 1005,
-            name: 'Mike Davis',
-            rider: 'Emily Chen',
-            location: 'City',
-            destination: 'Suburbs',
-            date: '2024-09-18',
-            time: '1700h',
-            activity: 89
-            },
-            {
-            id: 1006,
-            name: 'Emily Chen',
-            rider: 'Mike Davis',
-            location: 'Suburbs',
-            destination: 'City',
-            date: '2024-09-19',
-            time: '1800h',
-            activity: 90
-            },
-            {
-            id: 1007,
-            name: 'David Lee',
-            rider: 'Sophia Patel',
-            location: 'Town',
-            destination: 'Makutano',
-            date: '2024-09-20',
-            time: '1900h',
-            activity: 12
-            },
-            {
-            id: 1008,
-            name: 'Sophia Patel',
-            rider: 'David Lee',
-            location: 'Makutano',
-            destination: 'Town',
-            date: '2024-09-21',
-            time: '2000h',
-            activity: 23
-            },
-            {
-            id: 1009,
-            name: 'Kevin White',
-            rider: 'Olivia Martin',
-            location: 'City',
-            destination: 'Suburbs',
-            date: '2024-09-22',
-            time: '2100h',
-            activity: 34
-            },
-            {
-            id: 1010,
-            name: 'Olivia Martin',
-            rider: 'Kevin White',
-            location: 'Suburbs',
-            destination: 'City',
-            date: '2024-09-23',
-            time: '2200h',
-            activity: 45
-            },
-            {
-            id: 1011,
-            name: 'Peter Hall',
-            rider: 'Ava Kim',
-            location: 'Town',
-            destination: 'Village',
-            date: '2024-09-24',
-            time: '2300h',
-            activity: 56
-            },
-            {
-            id: 1012,
-            name: 'Ava Kim',
-            rider: 'Peter Hall',
-            location: 'Village',
-            destination: 'Town',
-            date: '2024-09-25',
-            time: '2400h',
-            activity: 67
-            },
-            {
-            id: 1013,
-            name: 'Samuel Brown',
-            rider: 'Lily Chen',
-            location: 'City',
-            destination: 'Suburbs',
-            date: '2024-09-26',
-            time: '0100h',
-            activity: 78
-            },
-            {
-            id: 1014,
-            name: 'Lily Chen',
-            rider: 'Samuel Brown',
-            location: 'Suburbs',
-            destination: 'City',
-            date: '2024-09-27',
-            time: '0200h',
-            activity: 89
-            }
+        let customersData = [ ];
+        let customerObject = {}
+        if(store.state.admin.rides != null){
+            store.state.admin.rides.forEach((element)=>{
+               customerObject = {
+                    id: element.id,
+                    name: element.client.name,
+                    rider: element.rider,
+                    location: element.location,
+                    destination: element.destination,
+                    date: element.date,
+                    time: element.time,
+                } 
 
-        ];
+                customersData.push(customerObject)
+
+                customerObject = {}
+                
+            })    
+        }
+
 
         return new Promise((resolve) => {
             setTimeout(() => resolve(customersData), 1000);
@@ -284,8 +155,14 @@ onMounted(() => {
         customers.value = getCustomers(data);
         loading.value = false;
     });
+    customersD.value  = store.state.admin.rides
 });
-
+watch(store.state.admin,()=>{
+    CustomerService.getCustomersMedium().then((data) => {
+        customers.value = getCustomers(data);
+        loading.value = false;
+    });
+})
 
 const initFilters = () => {
     filters.value = {
@@ -297,7 +174,6 @@ const initFilters = () => {
         date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS}] },
         balance: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
         status: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-        activity: { value: [0, 100], matchMode: FilterMatchMode.BETWEEN },
         verified: { value: null, matchMode: FilterMatchMode.EQUALS }
     };
 };
